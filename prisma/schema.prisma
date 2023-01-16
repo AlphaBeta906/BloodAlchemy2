@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model elements {
+  id               BigInt   @id @unique
+  name             String   @unique @db.VarChar
+  color            String   @db.VarChar
+  generation       BigInt
+  complexity       BigInt
+  date_of_creation DateTime @db.Timestamp(6)
+}
+
+model users {
+  username String   @id @unique @db.VarChar
+  password String   @db.VarChar
+  elements BigInt[]
+  watts    BigInt
+  salt     String?  @db.VarChar
+}
