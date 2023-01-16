@@ -2,18 +2,14 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient();
 
-export const get = async ({ params, request }) => {
-    if (params.username !== undefined) {
-        if (typeof params.username === 'string' || params.username instanceof String) {
-            return new Response(null, {
-                status: 400,
-                statusText: "Invalid username",
-            });
-        }
+export const get = async ({ request }) => {
+    const url = new URL(request.url)
+    const params = new URLSearchParams(url.search)
 
+    if (params.get('username') !== undefined) {
         const getUser = await prisma.users.findUnique({
             where: {
-                username: params.username
+                username: params.get('username') 
             }
         })
 
@@ -29,8 +25,10 @@ export const get = async ({ params, request }) => {
         });
     }
 
+    console.log(params)
+
     return new Response(null, {
         status: 500,
-        statusText: "TBA",
+        statusText: "sar",
     });
 }

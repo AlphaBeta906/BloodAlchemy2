@@ -7,15 +7,15 @@ import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 function getIcon(level) {
     switch (level) {
         case "error":
-            return <IoAlertCircleOutline class="w-auto h-6 shrink-0" />;
+            return <IoAlertCircleOutline className="w-auto h-6 shrink-0" />;
         case "warning":
-            return <IoWarningOutline class="w-auto h-6 shrink-0" />;
+            return <IoWarningOutline className="w-auto h-6 shrink-0" />;
         case "info":
-            return <IoInformationCircleOutline class="w-auto h-6 shrink-0" />;
+            return <IoInformationCircleOutline className="w-auto h-6 shrink-0" />;
         case "success":
-            return <IoCheckmarkCircleOutline class="w-auto h-6 shrink-0" />;
+            return <IoCheckmarkCircleOutline className="w-auto h-6 shrink-0" />;
         default:
-            return <IoBeerOutline class="w-auto h-6 shrink-0" />;
+            return <IoBeerOutline className="w-auto h-6 shrink-0" />;
     }
 }
 

@@ -13,17 +13,17 @@ export default function SignIn() {
                 method: "GET",
             });
 
-            if (result.ok === true) {
+            if (result.status === 404) {
                 setResult(
-                    <Alert level="warning">
-                        Account with username "{data.username}" exists.
+                    <Alert level="success">
+                        Account with username "{data.username}" doesn't exist.
                     </Alert>
                 )
                 return;
             } else {
                 setResult(
-                    <Alert level="success">
-                        Account with username "{data.username}" doesn't exist.
+                    <Alert level="warning">
+                        Account with username "{data.username}" exists.
                     </Alert>
                 )
                 return;
