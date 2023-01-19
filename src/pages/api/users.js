@@ -9,14 +9,13 @@ export const get = async ({ request }) => {
     if (params.get('username') !== undefined) {
         const getUser = await prisma.users.findUnique({
             where: {
-                username: params.get('username') 
+                username: params.get('username')
             }
         })
 
         if (getUser === null) {
             return new Response(null, {
-                status: 404,
-                statusText: "Not found",
+                status: 204
             });
         }
 
@@ -28,7 +27,22 @@ export const get = async ({ request }) => {
     console.log(params)
 
     return new Response(null, {
-        status: 500,
-        statusText: "sar",
+        status: 501,
     });
+}
+
+export const post = async ({ request }) => {
+    if (request.headers.get("Content-Type") === "application/json") {
+        const body = await request.json();
+        const name = body.name;
+
+        console.log(name)
+        
+        return new Response(JSON.stringify({
+            message: "Your name was: " + name
+        }), {
+            status: 200
+        })
+    }
+    return new Response(null, { status: 400 });
 }

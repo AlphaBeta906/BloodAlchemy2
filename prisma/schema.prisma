@@ -17,9 +17,10 @@ model elements {
 }
 
 model users {
-  username String   @id @unique @db.VarChar
-  password String   @db.VarChar
-  elements BigInt[]
-  watts    BigInt
-  salt     String?  @db.VarChar
+  username         String   @id @unique @db.VarChar
+  password         String   @db.VarChar
+  elements         BigInt[]
+  watts            BigInt
+  salt             String?  @db.VarChar
+  date_of_creation DateTime @db.Timestamp(6)
 }

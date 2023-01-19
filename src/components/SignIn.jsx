@@ -8,33 +8,45 @@ export default function SignIn() {
     const [result, setResult] = useState("");
 
     const addUser = useCallback(async (data) => {
-        try {
-            const result = await fetch(`/api/users?username=${data.username}`, {
-                method: "GET",
-            });
-
-            if (result.status === 404) {
-                setResult(
-                    <Alert level="success">
-                        Account with username "{data.username}" doesn't exist.
-                    </Alert>
-                )
-                return;
-            } else {
-                setResult(
-                    <Alert level="warning">
-                        Account with username "{data.username}" exists.
-                    </Alert>
-                )
-                return;
+        const result = await fetch(`/api/users?username=${data.username}`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
             }
-        } catch (error) {
+        });
+
+        if (result.status === 200) {
             setResult(
-                <Alert level="error">
-                    {error.toString()}
+                <Alert level="warning">
+                    Account with username "{data.username}" exists.
                 </Alert>
             )
+            return;
         }
+
+        // Testing only
+        const result2 = await fetch(`/api/users`, {
+            method: "POST",
+            body: JSON.stringify({
+                "name": "Bobbert"
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const d2 = await result2.text()
+
+        console.log(d2)
+
+        setResult(
+            <Alert level="info">
+                API w?
+            </Alert>
+        )
+
+        console.log(`Result #1: Got ${result.status}`)
+        console.log(`Result #2: Got ${result2.status}`)
 
         /*
         TBA IN THE NEXT DAY 
