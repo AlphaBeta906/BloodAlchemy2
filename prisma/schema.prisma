@@ -21,6 +21,7 @@ model users {
   password         String   @db.VarChar
   elements         BigInt[]
   watts            BigInt
+  barrels          Json[]
   salt             String?  @db.VarChar
   date_of_creation DateTime @db.Timestamp(6)
 }

@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { scryptSync, randomBytes } from 'crypto'
 
 const prisma = new PrismaClient();
 
@@ -27,22 +28,39 @@ export const get = async ({ request }) => {
     console.log(params)
 
     return new Response(null, {
-        status: 501,
+        status: 204,
     });
 }
 
 export const post = async ({ request }) => {
-    if (request.headers.get("Content-Type") === "application/json") {
-        const body = await request.json();
-        const name = body.name;
+    const body = await request.json();
 
-        console.log(name)
-        
-        return new Response(JSON.stringify({
-            message: "Your name was: " + name
-        }), {
-            status: 200
+    const keysToCheck = ["username", "password"]
+
+    const hasAllKeys = keysToCheck.every(key => Object.keys(body).includes(key))
+
+    if (!hasAllKeys) {
+        return new Response(null, {
+            status: 422    
         })
     }
-    return new Response(null, { status: 400 });
+
+    const salt = randomBytes(16).toString("hex")
+    const getHash = (password) => scryptSync(password, salt, 32).toString("hex");
+
+    await prisma.users.create({
+        data: {
+            username: body.username,
+            password: getHash(body.password),
+            elements: [],
+            watts: 100,
+            barrels: [],
+            salt: salt,
+            date_of_creation: new Date()
+        }
+    });
+
+    return new Response(null, {
+        status: 200    
+    })
 }
