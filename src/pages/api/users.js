@@ -55,7 +55,7 @@ export const post = async ({ request }) => {
             watts: 100,
             barrels: [],
             salt: salt,
-            date_of_creation: new Date()
+            date_of_creation: new Date.UTC()
         }
     });
 
