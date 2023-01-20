@@ -7,21 +7,10 @@ import { account } from "../scripts/stores";
 export default function SignIn() {
     const { register, formState: { errors }, setError, handleSubmit } = useForm();
     const [isCheckedPass, setIsCheckedPass] = useState(false);
-    const [isCheckedRemember, setIsCheckedRemember] = useState(false);
-
     const $account = useStore(account);
 
-    const handleChange = (event, id) => {
-        switch (id) {
-            case 'pass':
-                setIsCheckedPass(event.target.checked);
-                break;
-            case 'remember':
-                setIsCheckedRemember(event.target.checked);
-                break;
-            default:
-                break;
-        }
+    const handleChange = (event) => {
+        setIsCheckedPass(event.target.checked);    
     }
 
     const addUser = useCallback(async (data) => {
@@ -46,7 +35,7 @@ export default function SignIn() {
         });
 
         if (result.status === 200) {
-            setError("confirm", { 
+            setError("username", { 
                 type: "custom", 
                 message: `An account with the username of ${data.username} exists.`
             })
@@ -71,7 +60,7 @@ export default function SignIn() {
         return (
             <>
                 <center>
-                    <h1 className="text-center font-extrabold py-5">Sign In</h1>
+                    <h1 className="text-center font-extrabold py-5">Signin</h1>
 
                     <div className="card w-96 bg-base-300 shadow-xl">
                         <div className="card-body">
@@ -131,21 +120,12 @@ export default function SignIn() {
                             </div>
 
                             <label className="label cursor-pointer">
-                                <span className="label-text">Reveal passcodes</span>
+                                <span className="label-text">Reveal passwords</span>
                                 <input 
                                     type="checkbox" 
                                     className="checkbox" 
                                     checked={isCheckedPass}
-                                    onChange={(e) => handleChange(e, 'pass')}
-                                />
-                            </label>
-                            <label className="label cursor-pointer">
-                                <span className="label-text">Remember me</span>
-                                <input 
-                                    type="checkbox" 
-                                    className="checkbox" 
-                                    checked={isCheckedRemember}
-                                    onChange={(e) => handleChange(e, 'remember')}
+                                    onChange={(e) => handleChange(e)}
                                 />
                             </label><br />
 
@@ -157,7 +137,7 @@ export default function SignIn() {
                 </center>
             </>
         )
-    } else {
-        window.location.href = "/"
-    }
+    } 
+    
+    window.location.href = "/"
 }

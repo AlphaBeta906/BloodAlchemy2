@@ -1,10 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Error from "../components/Error.jsx";
+import LogIn from '../components/LogIn';
 ---
 
 <Layout title="Login">
-    <Error code="501" client:only>
-        Sadly this page is not yet finished, please wait for Alpha to work on it.
-    </Error>
+    <LogIn client:only />
 </Layout>

@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { scryptSync, randomBytes } from 'crypto'
-import toJson from '../../scripts/toJSON';
+import { DateTime } from "luxon";
+import toJSON from '../../scripts/toJSON';
 
 const prisma = new PrismaClient();
 
@@ -11,7 +12,7 @@ export const get = async ({ request }) => {
     if (params.get('username') !== undefined) {
         const getUser = await prisma.users.findUnique({
             where: {
-                username: params.get('username')
+                username: params.get("username")
             }
         });
 
@@ -21,7 +22,7 @@ export const get = async ({ request }) => {
             });
         }
 
-        return new Response(toJson(getUser), {
+        return new Response(toJSON(getUser), {
             status: 200,
         });
     }
@@ -55,7 +56,7 @@ export const post = async ({ request }) => {
             watts: 100,
             barrels: [],
             salt: salt,
-            date_of_creation: new Date.UTC()
+            date_of_creation: DateTime.utc().toJSDate()
         }
     });
 
