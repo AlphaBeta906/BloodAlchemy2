@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { scryptSync, randomBytes } from 'crypto'
+import toJson from '../../scripts/toJSON';
 
 const prisma = new PrismaClient();
 
@@ -12,7 +13,7 @@ export const get = async ({ request }) => {
             where: {
                 username: params.get('username')
             }
-        })
+        });
 
         if (getUser === null) {
             return new Response(null, {
@@ -20,12 +21,10 @@ export const get = async ({ request }) => {
             });
         }
 
-        return new Response(JSON.stringify(getUser), {
+        return new Response(toJson(getUser), {
             status: 200,
         });
     }
-
-    console.log(params)
 
     return new Response(null, {
         status: 204,
@@ -52,7 +51,7 @@ export const post = async ({ request }) => {
         data: {
             username: body.username,
             password: getHash(body.password),
-            elements: [],
+            elements: [0, 1, 2, 3],
             watts: 100,
             barrels: [],
             salt: salt,
@@ -61,6 +60,6 @@ export const post = async ({ request }) => {
     });
 
     return new Response(null, {
-        status: 200    
+        status: 201    
     })
 }

@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@astrojs/react": "^1.2.2",
+    "@nanostores/persistent": "^0.7.0",
+    "@nanostores/react": "^0.4.1",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "astro": "^1.8.0",
