@@ -3,11 +3,9 @@ import { useForm } from "react-hook-form";
 import { useStore } from '@nanostores/react';
 
 import { account } from "../scripts/stores";
-import Alert from "../components/Alert";
 
 export default function SignIn() {
-    const { register, handleSubmit } = useForm();
-    const [result, setResult] = useState("");
+    const { register, formState: { errors }, setError, handleSubmit } = useForm();
     const [isCheckedPass, setIsCheckedPass] = useState(false);
     const [isCheckedRemember, setIsCheckedRemember] = useState(false);
 
@@ -28,19 +26,19 @@ export default function SignIn() {
 
     const addUser = useCallback(async (data) => {
         if (data.username === "undefined" || data.username === "null") {
-            setResult(
-                <Alert level="warning">
-                    For technical reasons, you can not name yourself "undefined" or "null".
-                </Alert>
-            )
+            setError("username", { 
+                type: "custom", 
+                message: 'You can not name yourself "undefined" or "null".'
+            })
+            return;
         }
 
         if (data.confirm !== data.password) {
-            setResult(
-                <Alert level="error">
-                    Passwords do not match, please try again.
-                </Alert>
-            )
+            setError("confirm", { 
+                type: "custom", 
+                message: "Passwords do not match."
+            })
+            return;
         }
 
         const result = await fetch(`/api/users?username=${data.username}`, {
@@ -48,11 +46,10 @@ export default function SignIn() {
         });
 
         if (result.status === 200) {
-            setResult(
-                <Alert level="warning">
-                    Account with username "{data.username}" exists.
-                </Alert>
-            )
+            setError("confirm", { 
+                type: "custom", 
+                message: `An account with the username of ${data.username} exists.`
+            })
             return;
         }
 
@@ -83,34 +80,55 @@ export default function SignIn() {
                                     <span className="label-text">What is your username?</span>
                                 </label>
                                 <input
-                                    {...register("username")}
+                                    {...register("username", { required: "This is required." })}
                                     type="text"
                                     placeholder="Username"
                                     className="input input-bordered w-full max-w-xs"
+                                    aria-invalid={errors.username ? "true" : "false"} 
                                 />
+                                {errors.username && 
+                                <label className="label">
+                                    <span className="label-text-alt text-red-500">
+                                        {errors.username.message}
+                                    </span>
+                                </label>}
                             </div>
                             <div className="form-control w-full max-w-xs">
                                 <label className="label">
                                     <span className="label-text">What is your password?</span>
                                 </label>
                                 <input
-                                    {...register("password")}
+                                    {...register("password", { required: "This is required." })}
                                     type={isCheckedPass ? "text" : "password"}
                                     placeholder="Password"
                                     className="input input-bordered w-full max-w-xs"
+                                    aria-invalid={errors.password ? "true" : "false"} 
                                 />
+                                {errors.password && 
+                                <label className="label">
+                                    <span className="label-text-alt text-red-500">
+                                        {errors.password.message}
+                                    </span>
+                                </label>}
                             </div>
                             <div className="form-control w-full max-w-xs">
                                 <label className="label">
                                     <span className="label-text">Please repeat your password here.</span>
                                 </label>
                                 <input
-                                    {...register("confirm")}
+                                    {...register("confirm", { required: "This is required." })}
                                     type={isCheckedPass ? "text" : "password"}
                                     placeholder="Password"
                                     className="input input-bordered w-full max-w-xs"
+                                    aria-invalid={errors.confirm ? "true" : "false"} 
                                 />
-                            </div><br />
+                                {errors.confirm && 
+                                <label className="label">
+                                    <span className="label-text-alt text-red-500">
+                                        {errors.confirm.message}
+                                    </span>
+                                </label>}
+                            </div>
 
                             <label className="label cursor-pointer">
                                 <span className="label-text">Reveal passcodes</span>
@@ -129,9 +147,7 @@ export default function SignIn() {
                                     checked={isCheckedRemember}
                                     onChange={(e) => handleChange(e, 'remember')}
                                 />
-                            </label>{result ? <br /> : null}
-
-                            {result}<br />
+                            </label><br />
 
                             <button className="btn btn-primary" onClick={handleSubmit(addUser)} type="submit">
                                 Signin
