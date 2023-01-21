@@ -30,7 +30,7 @@ export default function SignIn() {
             return;
         }
 
-        const result = await fetch(`/api/users?username=${data.username}`, {
+        const result = await fetch(`/api/user?username=${data.username}`, {
             method: "GET"
         });
 
@@ -42,7 +42,7 @@ export default function SignIn() {
             return;
         }
 
-        const result2 = await fetch(`/api/users`, {
+        const result2 = await fetch(`/api/user`, {
             method: "POST",
             body: JSON.stringify({
                 "username": data.username,

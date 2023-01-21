@@ -16,7 +16,7 @@ export default function LogIn() {
     const registerUser = useCallback(async (data) => {
         console.log(data)
 
-        const result = await fetch(`/api/users?username=${data.username}`, {
+        const result = await fetch(`/api/user?username=${data.username}`, {
             method: "GET"
         });
 

@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model elements {
+model element {
   id               BigInt   @id @unique
   name             String   @unique @db.VarChar
   color            String   @db.VarChar
@@ -16,7 +16,7 @@ model elements {
   date_of_creation DateTime @db.Timestamp(6)
 }
 
-model users {
+model user {
   username         String   @id @unique @db.VarChar
   password         String   @db.VarChar
   elements         BigInt[]

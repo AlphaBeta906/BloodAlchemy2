@@ -10,7 +10,7 @@ export const get = async ({ request }) => {
     const params = new URLSearchParams(url.search)
 
     if (params.get('username') !== undefined) {
-        const getUser = await prisma.users.findUnique({
+        const getUser = await prisma.user.findUnique({
             where: {
                 username: params.get("username")
             }
@@ -48,7 +48,7 @@ export const post = async ({ request }) => {
     const salt = randomBytes(16).toString("hex")
     const getHash = (password) => scryptSync(password, salt, 32).toString("hex");
 
-    await prisma.users.create({
+    await prisma.user.create({
         data: {
             username: body.username,
             password: getHash(body.password),
