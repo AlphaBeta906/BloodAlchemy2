@@ -19,7 +19,7 @@ export default function SignOut() {
                 <center>
                     <h1 className="text-center font-extrabold py-5">Signout</h1>
 
-                    <div class="card w-96 bg-base-100 shadow-xl">
+                    <div class="card w-96 bg-base-300 shadow-xl">
                         <div class="card-body">
                             <p>Are you sure you want to sign out?</p><br />
 
