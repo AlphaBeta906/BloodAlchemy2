@@ -8,7 +8,7 @@ datasource db {
 }
 
 model element {
-  id               BigInt   @id @unique
+  id               BigInt   @id @unique @default(autoincrement())
   name             String   @unique @db.VarChar
   color            String   @db.VarChar
   generation       BigInt

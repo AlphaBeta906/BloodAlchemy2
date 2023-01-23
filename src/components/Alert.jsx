@@ -4,6 +4,10 @@ import { IoWarningOutline } from 'react-icons/io5';
 import { IoInformationCircleOutline } from 'react-icons/io5';
 import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 
+/**
+ * It takes a string and returns an icon
+ * @returns A React component.
+ */
 function getIcon(level) {
     switch (level) {
         case "error":
@@ -19,6 +23,10 @@ function getIcon(level) {
     }
 }
 
+/**
+ * It takes a string and returns a string
+ * @returns The class name for the alert.
+ */
 function getClass(level) {
     switch (level) {
         case "error":
@@ -34,6 +42,11 @@ function getClass(level) {
     }
 }
 
+/**
+ * It returns a div with a class of alert, shadow-lg, and the level of the alert, and a div with an
+ * icon and the children of the alert
+ * @returns A div with a class of alert and shadow-lg.
+ */
 export default function Alert(props) {
     return (
         <div className={`alert ${getClass(props.level)} shadow-lg`}>
