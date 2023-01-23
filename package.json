@@ -12,6 +12,9 @@
   },
   "dependencies": {
     "@astrojs/react": "^1.2.2",
+    "@dicebear/avatars": "^4.10.8",
+    "@dicebear/identicon": "^5.1.6",
+    "@dicebear/initials": "^5.1.6",
     "@nanostores/persistent": "^0.7.0",
     "@nanostores/react": "^0.4.1",
     "@types/react": "^18.0.26",
