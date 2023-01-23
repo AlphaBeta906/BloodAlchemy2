@@ -5,6 +5,11 @@ import toJSON from '../../scripts/toJSON';
 
 const prisma = new PrismaClient();
 
+/**
+ * It gets the username from the URL, then it checks if the user exists, and if it does, it returns the
+ * user's data
+ * @returns A user object
+ */
 export const get = async ({ request }) => {
     const url = new URL(request.url)
     const params = new URLSearchParams(url.search)
@@ -32,6 +37,11 @@ export const get = async ({ request }) => {
     });
 }
 
+/**
+ * It takes a request, checks if it has the required keys, and if it does, it creates a new user in the
+ * database
+ * @returns A new response with a status of 201
+ */
 export const post = async ({ request }) => {
     const body = await request.json();
 
