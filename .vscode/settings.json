@@ -1,0 +1,7 @@
+{
+    "docwriter.style": "Auto-detect",
+    "eslint.workingDirectories": [
+        {"mode": "auto"}
+    ],
+    "editor.insertSpaces": false
+}

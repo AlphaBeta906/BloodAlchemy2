@@ -14,6 +14,7 @@ model element {
   generation       BigInt
   complexity       BigInt
   date_of_creation DateTime @db.Timestamp(6)
+  creator          String   @db.VarChar
 }
 
 model user {
