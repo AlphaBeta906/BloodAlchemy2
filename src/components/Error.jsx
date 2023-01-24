@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 /**
  * It returns a div with a class of hero, which contains a div with a class of hero-content, which
  * contains a div with a class of max-w-md flex-1, which contains an h1 with a class of text-5xl
@@ -7,16 +8,21 @@
  * home?"
  * @returns A React component
  */
-export default function Error(props) {
-    return (
-        <div className="hero h-[calc(100vh-4rem)]">
-            <div className="hero-content text-center">
-                <div className="max-w-md flex-1">
-                    <h1 className="text-5xl font-bold text-error">{props.code}</h1>
-                    <p className="py-6">{props.children}</p>
-                    <a href="/"><button className="btn btn-primary">Go home?</button></a>
-                </div>
-            </div>
-        </div>
-    )
+export default function Error({ code, children }) {
+	return (
+		<div className="hero h-[calc(100vh-4rem)]">
+			<div className="hero-content text-center">
+				<div className="max-w-md flex-1">
+					<h1 className="text-5xl font-bold text-error">{code}</h1>
+					<p className="py-6">{children}</p>
+					<a href="/"><button className="btn btn-primary">Go home?</button></a>
+				</div>
+			</div>
+		</div>
+	);
 }
+
+Error.propTypes = {
+	code: PropTypes.string.isRequired,
+	children: PropTypes.element.isRequired
+};
