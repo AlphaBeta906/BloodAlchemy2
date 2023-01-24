@@ -24,5 +24,5 @@ export default function Error({ code, children }) {
 
 Error.propTypes = {
 	code: PropTypes.string.isRequired,
-	children: PropTypes.element.isRequired
+	children: PropTypes.node.isRequired
 };

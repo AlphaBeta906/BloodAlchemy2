@@ -47,13 +47,13 @@ function getClass(level) {
  * icon and the children of the alert
  * @returns A div with a class of alert and shadow-lg.
  */
-export default function Alert(props) {
+export default function Alert({ level, children }) {
 	return (
-		<div className={`alert ${getClass(props.level)} shadow-lg`}>
+		<div className={`alert ${getClass(level)} shadow-lg`}>
 			<div>
-				{getIcon(props.level)}
+				{getIcon(level)}
 				<span>
-					{props.children}
+					{children}
 				</span>
 			</div>
 		</div>
@@ -62,5 +62,5 @@ export default function Alert(props) {
 
 Alert.propTypes = {
 	level: PropTypes.string.isRequired,
-	children: PropTypes.element.isRequired
+	children: PropTypes.node.isRequired
 };

@@ -1,34 +1,53 @@
-import { useState } from "react";
-import Error from "./Error";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
+import Error from "./Error";
+import ElemBox from "./ElementBox";
+
 export default function Element({ name }) {
-	const [result, setResult] = useState(async () => {
+	const [status, setStatus] = useState(null);
+	const [body, setBody] = useState({});
+	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(() => {
+		getData();
+	}, []);
+
+	const getData = async () => {
 		const result = await fetch(`/api/element?name=${name}`, {
 			method: "GET"
 		});
 
-		setResult(result.status);
-	});
+		setStatus(result.status);
 
-	if (result === 204) {
-		return (
-			<Error code="404">
-                This element does not exist.
-			</Error>
-		);
-	} else if (result === 200) {
-		return (
-			<Error code="200">
-                This element exists!
-			</Error>
-		);
-	} else {
-		return (
-			<Error code="500">
-                The server died.
-			</Error>
-		);
+		const rjson = await result.json();
+
+		setBody(rjson);
+		setIsLoading(false);
+	};
+
+	if (!isLoading) {
+		if (status === 204) {
+			return (
+				<Error code="404">
+					This element does not exist.
+				</Error>
+			);
+		} else if (status === 200) {
+			return (
+				<>
+					<center className="p-10">
+						<ElemBox body={body} width={100} />
+					</center>
+				</>
+			);
+		} else {
+			return (
+				<Error code="500">
+					The server died.
+				</Error>
+			);
+		}
 	}
 }
 

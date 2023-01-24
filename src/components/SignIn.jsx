@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useStore } from "@nanostores/react";
 import { useForm, FormProvider } from "react-hook-form";
 
@@ -14,7 +14,7 @@ export default function SignIn() {
 		setIsCheckedPass(event.target.checked);
 	};
 
-	const addUser = useCallback(async (data) => {
+	const addUser = async (data) => {
 		if (data.username === "undefined" || data.username === "null") {
 			methods.setError("username", {
 				type: "custom",
@@ -55,7 +55,7 @@ export default function SignIn() {
 			account.set(data.username);
 			window.location.href = "/";
 		}
-	});
+	};
 
 	if ($account === "") {
 		return (

@@ -1,15 +1,14 @@
-import { useCallback } from "react";
 import { useStore } from "@nanostores/react";
 import { account } from "../scripts/stores";
 
 export default function SignOut() {
 	const $account = useStore(account);
 
-	const signOutUser = useCallback(async () => {
+	const signOutUser = async () => {
 		account.set("");
 
 		window.location.href = "/";
-	});
+	};
 
 	console.log($account === "");
 

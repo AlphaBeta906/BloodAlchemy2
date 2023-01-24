@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useStore } from "@nanostores/react";
 
@@ -14,7 +14,7 @@ export default function LogIn() {
 		setIsCheckedPass(event.target.checked);
 	};
 
-	const registerUser = useCallback(async (data) => {
+	const registerUser = async (data) => {
 		console.log(data);
 
 		const result = await fetch(`/api/user?username=${data.username}`, {
@@ -51,7 +51,7 @@ export default function LogIn() {
 
 		account.set(data.username);
 		window.location.href = "/";
-	});
+	};
 
 	if ($account === "") {
 		return (
