@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import Error from "./Error";
 import ElemBox from "./ElementBox";
+import Avatar from "./Avatar";
 
 export default function Element({ name }) {
 	const [status, setStatus] = useState(null);
@@ -39,6 +40,13 @@ export default function Element({ name }) {
 					<center className="p-10">
 						<ElemBox body={body} width={100} />
 					</center>
+
+					<div className="mx-10">
+						<div>ID: #{body.id}</div>
+						<div className="flex items-center">
+							Creator:&thinsp;<Avatar username={body.creator} small={true} />&thinsp;{body.creator}
+						</div>
+					</div>
 				</>
 			);
 		} else {

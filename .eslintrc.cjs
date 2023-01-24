@@ -1,43 +1,43 @@
-{
-	"env": {
-		"browser": true,
-		"es2021": true,
-		"node": true
+module.exports = {
+	env: {
+		browser: true,
+		es2021: true,
+		node: true
 	},
-	"extends": [
+	extends: [
 		"eslint:recommended",
 		"plugin:react/recommended",
 		"plugin:react/jsx-runtime",
 		"plugin:astro/recommended"
 	],
-	"overrides": [
+	overrides: [
 		{
 			// Define the configuration for `.astro` file.
-			"files": [
+			files: [
 				"*.astro"
 			],
 			// Allows Astro components to be parsed.
-			"parser": "astro-eslint-parser",
+			parser: "astro-eslint-parser",
 			// Parse the script in `.astro` as TypeScript by adding the following configuration.
 			// It's the setting you need when using TypeScript.
-			"parserOptions": {},
-			"rules": {
+			parserOptions: {},
+			rules: {
 				// override/add rules settings here, such as:
 				// "astro/no-set-html-directive": "error"
 			}
 		}
 	],
-	"parser": "@babel/eslint-parser",
-	"parserOptions": {
-		"requireConfigFile": false,
-		"ecmaVersion": "latest",
-		"sourceType": "module"
+	parser: "@babel/eslint-parser",
+	parserOptions: {
+		requireConfigFile: false,
+		ecmaVersion: "latest",
+		sourceType: "module"
 	},
-	"plugins": [
+	plugins: [
 		"react",
 		"react-hooks"
 	],
-	"rules": {
+	rules: {
 		"indent": [
 			"error",
 			"tab",
@@ -58,4 +58,4 @@
 			"always"
 		]
 	}
-}
+};
