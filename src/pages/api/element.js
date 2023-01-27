@@ -4,15 +4,14 @@ import toJSON from "../../scripts/toJSON";
 const prisma = new PrismaClient();
 
 /**
- * It takes a request, checks if the request has a query parameter called `element`, and if it does, it
- * returns the element with that name
- * @returns A element object
+ * It gets an element from the database
+ * @returns A response object with the status code 200 and the JSON string of the elements.
  */
 export const get = async ({ request }) => {
 	const url = new URL(request.url);
 	const params = new URLSearchParams(url.search);
 
-	if (params.get("name") !== undefined) {
+	if (params.get("name") !== null) {
 		const getElem = await prisma.element.findUnique({
 			where: {
 				name: params.get("name")
@@ -28,9 +27,14 @@ export const get = async ({ request }) => {
 		return new Response(toJSON(getElem), {
 			status: 200,
 		});
+	} else {
+		const getElems = await prisma.element.findMany({
+			skip: 0,
+			take: 4,
+		});
+
+		return new Response(toJSON(getElems), {
+			status: 200
+		});
 	}
-    
-	return new Response(null, {
-		status: 422
-	});
 };

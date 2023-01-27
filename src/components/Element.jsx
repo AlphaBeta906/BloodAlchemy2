@@ -11,6 +11,7 @@ export default function Element({ name }) {
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
+		console.log("aaaa");
 		getData();
 	}, []);
 
@@ -21,9 +22,12 @@ export default function Element({ name }) {
 
 		setStatus(result.status);
 
-		const rjson = await result.json();
+		if (result.status === 200) {
+			const rjson = await result.json();
 
-		setBody(rjson);
+			setBody(rjson);
+		}
+
 		setIsLoading(false);
 	};
 
@@ -42,9 +46,9 @@ export default function Element({ name }) {
 					</center>
 
 					<div className="mx-10">
-						<div>ID: #{body.id}</div>
+						<div><b>ID:</b> #{body.id}</div>
 						<div className="flex items-center">
-							Creator:&thinsp;<Avatar username={body.creator} small={true} />&thinsp;{body.creator}
+							<b>Creator:</b>&thinsp;&thinsp;<Avatar username={body.creator} small={true} />&thinsp;&thinsp;{body.creator}
 						</div>
 					</div>
 				</>

@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import { scryptSync, randomBytes } from "crypto";
-import { DateTime } from "luxon";
 import toJSON from "../../scripts/toJSON";
 
 const prisma = new PrismaClient();
@@ -66,7 +65,7 @@ export const post = async ({ request }) => {
 			watts: 100,
 			barrels: [],
 			salt: salt,
-			date_of_creation: DateTime.utc().toJSDate()
+			date_of_creation: new Date()
 		}
 	});
 
