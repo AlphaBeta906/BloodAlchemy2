@@ -22,7 +22,7 @@ await prisma.element.create({
 		color: "1CA3EC",
 		generation: 1,
 		complexity: 1,
-		date_of_creation: DateTime.utc().toJSDate(),
+		date_of_creation: new Date(),
 		creator: "AlphaBeta906"
 	}
 });
@@ -33,7 +33,7 @@ await prisma.element.create({
 		color: "836539",
 		generation: 1,
 		complexity: 1,
-		date_of_creation: DateTime.utc().toJSDate(),
+		date_of_creation: new Date(),
 		creator: "AlphaBeta906"
 	}
 });
