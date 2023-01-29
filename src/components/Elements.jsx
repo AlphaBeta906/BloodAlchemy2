@@ -27,16 +27,21 @@ export default function Elements() {
 	if (!isLoading) {
 		const elemList = body.map(element => {
 			return (
-				<ElemBox key={element.id} body={element} width={100} />
+				<div className="font-mono px-2 py-1 flex items-center" key={element.id}>
+					#{element.id}:&thinsp;<a
+						className="inline-block no-underline"
+						href={`/element/${element.name}`}
+					>
+						<ElemBox body={element} width={50} />
+					</a>
+				</div>
 			);
 		});
 
-		return elemList;
-	} else {
 		return (
-			<>
-				The bruh?
-			</>
+			<div className="pt-2">
+				{elemList}
+			</div>
 		);
 	}
 }

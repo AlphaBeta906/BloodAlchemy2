@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useStore } from "@nanostores/react";
 
-import { account } from "../scripts/stores";
+import { account, token } from "../scripts/stores";
 import Input from "./Input";
 
 export default function LogIn() {
@@ -17,40 +17,32 @@ export default function LogIn() {
 	const registerUser = async (data) => {
 		console.log(data);
 
-		const result = await fetch(`/api/user?username=${data.username}`, {
-			method: "GET"
+		const result = await fetch("/api/login", {
+			method: "POST",
+			body: JSON.stringify({
+				"username": data.username,
+				"password": data.password
+			})
 		});
 
-		if (result.status === 204) {
+		if (result.status === 400) {
 			methods.setError("username", {
 				type: "custom",
-				message: `An account with the username of ${data.username} doesn't exist.`
+				message: `Account "${data.username}" exists.`
 			});
 			return;
 		}
 
-		const rjson = await result.json();
+		if (result.status === 200) {
+			const rjson = await result.json();
 
-		console.log(rjson);
+			console.log(rjson);
 
-		const result2 = await fetch(`/api/hash?password=${data.password}&salt=${rjson.salt}`, {
-			method: "GET"
-		});
+			account.set(data.username);
+			token.set(rjson.token);
 
-		const rjson2 = await result2.json();
-
-		console.log(rjson2);
-
-		if (rjson2.password !== rjson.password) {
-			methods.setError("password", {
-				type: "custom",
-				message: "Password is incorrect."
-			});
-			return;
+			window.location.href = "/";
 		}
-
-		account.set(data.username);
-		window.location.href = "/";
 	};
 
 	if ($account === "") {
