@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useStore } from "@nanostores/react";
 import { useForm, FormProvider } from "react-hook-form";
 
-import { account } from "../scripts/stores";
+import { account, token } from "../scripts/stores";
 import Input from "./Input";
 
 export default function SignIn() {
@@ -31,19 +31,7 @@ export default function SignIn() {
 			return;
 		}
 
-		const result = await fetch(`/api/user?username=${data.username}`, {
-			method: "GET"
-		});
-
-		if (result.status === 200) {
-			methods.setError("username", {
-				type: "custom",
-				message: `An account with the username of ${data.username} exists.`
-			});
-			return;
-		}
-
-		const result2 = await fetch("/api/user", {
+		const result = await fetch("/api/signin", {
 			method: "POST",
 			body: JSON.stringify({
 				"username": data.username,
@@ -51,8 +39,22 @@ export default function SignIn() {
 			})
 		});
 
-		if (result2.status === 201) {
+		if (result.status === 400) {
+			methods.setError("username", {
+				type: "custom",
+				message: `An account "${data.username}" exists.`
+			});
+			return;
+		}
+
+		if (result.status === 201) {
+			const rjson = await result.json();
+
+			console.log(rjson);
+
 			account.set(data.username);
+			token.set(rjson.token);
+
 			window.location.href = "/";
 		}
 	};
