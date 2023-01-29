@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import blackOrWhite from "../scripts/blackOrWhite";
 
 export default function ElemBox({ body, width }) {
-	console.log(body.color);
-
 	return (
 		<div id="elem" className="font-bold rounded-md bg-white flex items-center justify-center font-mono" style={{
 			height: width + "px", 

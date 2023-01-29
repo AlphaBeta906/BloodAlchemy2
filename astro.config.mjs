@@ -8,5 +8,6 @@ import react from "@astrojs/react";
 export default defineConfig({
 	output: "server",
 	adapter: node({ mode: "middleware" }),
-	integrations: [react()]
+	integrations: [react()],
+	server: { port: 4000, host: true }
 });

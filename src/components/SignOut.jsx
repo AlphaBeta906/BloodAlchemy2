@@ -1,11 +1,12 @@
 import { useStore } from "@nanostores/react";
-import { account } from "../scripts/stores";
+import { account, token } from "../scripts/stores";
 
 export default function SignOut() {
 	const $account = useStore(account);
 
 	const signOutUser = async () => {
 		account.set("");
+		token.set("");
 
 		window.location.href = "/";
 	};
