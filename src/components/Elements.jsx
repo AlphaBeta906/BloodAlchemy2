@@ -1,47 +1,49 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 import ElemBox from "./ElementBox";
+import QueryWrapper from "./QueryWrapper";
 
-export default function Elements() {
-	const [body, setBody] = useState({});
-	const [isLoading, setIsLoading] = useState(true);
+function Base() {
+	const { isLoading, error, data } = useQuery({
+		queryKey: ["element"],
+		queryFn: async () => {
+			const result = await fetch("/api/element");
 
-	useEffect(() => {
-		getData();
-	}, []);
+			const rjson = result.json();
 
-	const getData = async () => {
-		const result = await fetch("/api/element", {
-			method: "GET"
-		});
-
-		if (result.status === 200) {
-			const rjson = await result.json();
-
-			setBody(rjson);
+			return rjson;
 		}
+	});
 
-		setIsLoading(false);
-	};
+	if (isLoading) return "Loading...";
 
-	if (!isLoading) {
-		const elemList = body.map(element => {
-			return (
-				<div className="font-mono px-2 py-1 flex items-center" key={element.id}>
-					#{element.id}:&thinsp;<a
-						className="inline-block no-underline"
-						href={`/element/${element.name}`}
-					>
-						<ElemBox body={element} width={50} />
-					</a>
-				</div>
-			);
-		});
+	if (error) return "An error has occurred: " + error.message;
 
+	const elemList = data.map(element => {
 		return (
-			<div className="pt-2">
-				{elemList}
+			<div className="font-mono px-2 py-1 flex items-center" key={element.id}>
+				#{element.id}:&thinsp;<a
+					className="inline-block no-underline"
+					href={`/element/${element.name}`}
+				>
+					<ElemBox body={element} width={50} />
+				</a>
 			</div>
 		);
-	}
+	});
+
+	return (
+		<div className="pt-2">
+			{elemList}
+		</div>
+	);
+}
+
+// I really hate Astro in this part - Jan 30, 2023
+export default function Elements() {
+	return (
+		<QueryWrapper>
+			<Base />
+		</QueryWrapper>
+	);
 }
