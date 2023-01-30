@@ -1,4 +1,5 @@
-import PropTypes from "prop-types";
+import type { ReactNode } from "react";
+
 import { IoAlertCircleOutline, IoBeerOutline } from "react-icons/io5";
 import { IoWarningOutline } from "react-icons/io5";
 import { IoInformationCircleOutline } from "react-icons/io5";
@@ -8,7 +9,7 @@ import { IoCheckmarkCircleOutline } from "react-icons/io5";
  * It takes a string and returns an icon
  * @returns A React component.
  */
-function getIcon(level) {
+function getIcon(level: string) {
 	switch (level) {
 		case "error": 
 			return <IoAlertCircleOutline className="w-auto h-6 shrink-0" />;
@@ -27,7 +28,7 @@ function getIcon(level) {
  * It takes a string and returns a string
  * @returns The class name for the alert.
  */
-function getClass(level) {
+function getClass(level: string) {
 	switch (level) {
 		case "error":
 			return "alert-error";
@@ -42,12 +43,17 @@ function getClass(level) {
 	}
 }
 
+type Props = {
+	level: string;
+	children?: ReactNode;
+}
+
 /**
  * It returns a div with a class of alert, shadow-lg, and the level of the alert, and a div with an
  * icon and the children of the alert
  * @returns A div with a class of alert and shadow-lg.
  */
-export default function Alert({ level, children }) {
+export default function Alert({ level, children }: Props) {
 	return (
 		<div className={`alert ${getClass(level)} shadow-lg`}>
 			<div>
@@ -59,8 +65,3 @@ export default function Alert({ level, children }) {
 		</div>
 	);
 }
-
-Alert.propTypes = {
-	level: PropTypes.string.isRequired,
-	children: PropTypes.node.isRequired
-};

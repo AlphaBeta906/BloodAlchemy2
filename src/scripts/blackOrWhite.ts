@@ -1,4 +1,4 @@
-export default function blackOrWhite(hex) {
+export default function blackOrWhite(hex: string) {
 	// Convert hex to RGB
 	let r = parseInt(hex.substring(0, 2), 16);
 	let g = parseInt(hex.substring(2, 4), 16);

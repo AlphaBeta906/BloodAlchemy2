@@ -1,3 +1,5 @@
+import type { APIRoute } from 'astro';
+
 import { PrismaClient } from "@prisma/client";
 import toJSON from "../../scripts/toJSON";
 
@@ -8,14 +10,14 @@ const prisma = new PrismaClient();
  * user with that username
  * @returns A user object
  */
-export const get = async ({ request }) => {
+export const get: APIRoute = async ({ request }) => {
 	const url = new URL(request.url);
 	const params = new URLSearchParams(url.search);
 
 	if (params.get("username") !== null) {
 		const getUser = await prisma.user.findUnique({
 			where: {
-				username: params.get("username")
+				username: params.get("username")!
 			}
 		});
 
