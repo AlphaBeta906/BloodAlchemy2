@@ -1,3 +1,5 @@
+import type { APIRoute } from 'astro';
+
 import { PrismaClient } from "@prisma/client";
 import toJSON from "../../scripts/toJSON";
 
@@ -7,14 +9,14 @@ const prisma = new PrismaClient();
  * It gets an element from the database
  * @returns A response object with the status code 200 and the JSON string of the elements.
  */
-export const get = async ({ request }) => {
+export const get: APIRoute = async ({ request }) => {
 	const url = new URL(request.url);
 	const params = new URLSearchParams(url.search);
 
 	if (params.get("name") !== null) {
 		const getElem = await prisma.element.findUnique({
 			where: {
-				name: params.get("name")
+				name: params.get("name")!
 			}
 		});
 

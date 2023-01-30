@@ -1,12 +1,18 @@
+import type { APIRoute } from 'astro';
+
 import { PrismaClient } from "@prisma/client";
 
 import toJSON from "../../scripts/toJSON";
 import { generateToken } from "../../scripts/auth/jwt";
-import { validateHash } from "../../scripts/auth/hash";
+import { getHash } from "../../scripts/auth/hash";
 
 const prisma = new PrismaClient();
 
-export const post = async ({ request }) => {
+/**
+ * It creates a new user in the database, and returns a token
+ * @returns A new response with the user and token
+ */
+export const post: APIRoute = async ({ request }) => {
 	const body = await request.json();
 
 	const keysToCheck = ["username", "password"];
@@ -19,29 +25,34 @@ export const post = async ({ request }) => {
 		});
 	}
 
-	const user = await prisma.user.findUnique({
+	const existsUser = await prisma.user.findUnique({
 		where: {
 			username: body.username
 		}
 	});
 
-	if (!user) {
+	if (existsUser) {
 		return new Response(null, {
-			status: 404
+			status: 400
 		});
 	}
 
-	const pwd = validateHash(body.password, user.salt);
+	const { hash, salt } = getHash(body.password);
 
-	if (pwd !== user.password) {
-		return new Response(null, {
-			status: 401
-		});
-	}
+	const user = await prisma.user.create({
+		data: {
+			username: body.username,
+			password: hash,
+			elements: [1, 2, 3, 4],
+			watts: 100,
+			barrels: [],
+			salt: salt
+		}
+	});
 
 	const token = generateToken(body.username);
 
 	return new Response(toJSON({ user: user, token: token }), {
-		status: 200
+		status: 201
 	});
 };

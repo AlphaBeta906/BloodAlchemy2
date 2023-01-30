@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
-import ElemBox from "./ElementBox";
-import QueryWrapper from "./QueryWrapper";
+import ElemBox from "../ElementBox";
+import QueryWrapper from "../QueryWrapper";
 
 function Base() {
 	const { isLoading, error, data } = useQuery({
@@ -15,11 +15,19 @@ function Base() {
 		}
 	});
 
-	if (isLoading) return "Loading...";
+	if (isLoading) return (
+		<>
+			Loading...
+		</>
+	);
 
-	if (error) return "An error has occurred: " + error.message;
+	if (error instanceof Error) return (
+		<>
+			An error has occurred: {error.message}
+		</>
+	);
 
-	const elemList = data.map(element => {
+	const elemList = data.map((element: { id: number | null | undefined; name: string; }) => {
 		return (
 			<div className="font-mono px-2 py-1 flex items-center" key={element.id}>
 				#{element.id}:&thinsp;<a
