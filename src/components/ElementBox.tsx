@@ -1,7 +1,8 @@
 import blackOrWhite from "../scripts/blackOrWhite";
+import type TElement from "../scripts/types/Element";
 
 type Props = {
-	body: any;
+	body: TElement;
 	width?: number;
 };
 

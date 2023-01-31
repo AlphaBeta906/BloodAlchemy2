@@ -18,7 +18,8 @@ model element {
 }
 
 model user {
-  username         String   @id @unique @db.VarChar
+  id               BigInt   @id @unique @default(autoincrement())
+  username         String   @unique @db.VarChar
   password         String   @db.VarChar
   elements         BigInt[]
   watts            BigInt

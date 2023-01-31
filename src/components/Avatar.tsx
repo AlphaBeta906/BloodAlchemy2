@@ -17,9 +17,11 @@ export default function Avatar({ username, small = false }: Props) {
 	let avatar = null;
 
 	// Really hate this part of the "TypeScript"-ification part of the process... - Jan 30, 2023
-
+	// This is getting worse. - Jan 31, 2023
+	
 	if (username === "") {
 		avatar = useMemo(() => {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
 			return createAvatar(initials, {
 				dataUri: true,
@@ -30,6 +32,7 @@ export default function Avatar({ username, small = false }: Props) {
 		}, []);
 	} else {
 		avatar = useMemo(() => {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
 			return createAvatar(identicon, {
 				dataUri: true,

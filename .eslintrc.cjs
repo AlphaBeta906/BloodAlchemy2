@@ -8,7 +8,9 @@ module.exports = {
 		"eslint:recommended",
 		"plugin:react/recommended",
 		"plugin:react/jsx-runtime",
-		"plugin:astro/recommended"
+		"plugin:astro/recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended"
 	],
 	overrides: [
 		{
@@ -27,7 +29,7 @@ module.exports = {
 			}
 		}
 	],
-	parser: "@babel/eslint-parser",
+	parser: "@typescript-eslint/parser",
 	parserOptions: {
 		requireConfigFile: false,
 		ecmaVersion: "latest",
@@ -35,7 +37,8 @@ module.exports = {
 	},
 	plugins: [
 		"react",
-		"react-hooks"
+		"react-hooks",
+		"@typescript-eslint"
 	],
 	rules: {
 		"indent": [

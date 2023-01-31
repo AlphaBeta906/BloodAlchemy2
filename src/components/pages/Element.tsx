@@ -5,6 +5,7 @@ import ErrorMessage from "../ErrorMessage";
 import ElemBox from "../ElementBox";
 import Avatar from "../Avatar";
 import QueryWrapper from "../QueryWrapper";
+import Loader from "../Loader";
 
 type Props = {
 	name: string;
@@ -26,21 +27,13 @@ function Body({ name }: Props): JSX.Element {
 		}
 	});
 
-	if (isLoading) { 
-		return (
-			<>
-				Loading...
-			</>
-		);
-	}
+	if (isLoading) return <Loader />;
 
-	if (error instanceof Error) {
-		return (
-			<>
-				An error has occurred: {error.message}
-			</>
-		);
-	};
+	if (error instanceof Error) return (
+		<>
+			An error has occurred: {error.message}
+		</>
+	);
 
 	if (data === 204) {
 		return (
