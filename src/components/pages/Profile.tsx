@@ -2,20 +2,19 @@ import { useQuery } from "@tanstack/react-query";
 import { DateTime } from "luxon";
 
 import ErrorMessage from "../ErrorMessage";
-import ElemBox from "../ElementBox";
 import Avatar from "../Avatar";
 import QueryWrapper from "../QueryWrapper";
 import Loader from "../Loader";
 
 type Props = {
-	name: string;
+	username: string;
 }
 
-function Body({ name }: Props): JSX.Element {
+function Base({ username }: Props) {
 	const { isLoading, error, data } = useQuery({
 		queryKey: ["element"],
 		queryFn: async () => {
-			const result = await fetch(`/api/element?name=${name}`);
+			const result = await fetch(`/api/user?username=${username}`);
 
 			if (result.status === 204) {
 				return 204;
@@ -48,26 +47,21 @@ function Body({ name }: Props): JSX.Element {
 	return (
 		<>
 			<center className="p-10">
-				<ElemBox body={data} width={100} />
+				<Avatar username={username} width={100} />
+				<h2 className="font-extrabold">{username}</h2>
 			</center>
 
 			<div className="mx-10">
-				<div className="mb-1.5"><b>ID:</b> #{data.id}</div>
-				<div className="mb-1.5"><b>Generation:</b> {data.generation}</div>
-				<div className="mb-1.5"><b>Complexity:</b> {data.complexity}</div>
-				<div className="flex items-center mb-1.5">
-					<b>Creator:</b>&thinsp;&thinsp;<Avatar username={data.creator} width={28} />&thinsp;&thinsp;{data.creator}
-				</div>
 				<div className="mb-1.5"><b>Date of Creation:</b> {date}</div>
 			</div>
 		</>
 	);
 }
 
-export default function Element({ name }: Props) {
+export default function Profile({ username }: Props) {
 	return (
 		<QueryWrapper>
-			<Body name={name} />
+			<Base username={username} />
 		</QueryWrapper>
 	);
 }

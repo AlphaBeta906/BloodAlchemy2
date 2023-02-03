@@ -23,6 +23,8 @@ export default function SignIn() {
 	};
 
 	const addUser: SubmitHandler<FormValues> = async (data) => {
+		console.log(data.password);
+
 		if (data.username === "undefined" || data.username === "null") {
 			methods.setError("username", {
 				type: "custom",

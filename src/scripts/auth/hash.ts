@@ -1,8 +1,8 @@
 import { genSaltSync, hashSync, compareSync } from "bcryptjs";
 
 export function getHash(password: string) {
-	var salt = genSaltSync(10);
-	var hash = hashSync(password, salt);
+	const salt = genSaltSync(10);
+	const hash = hashSync(password, salt);
 
 	return { hash, salt };
 }

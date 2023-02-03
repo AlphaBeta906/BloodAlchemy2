@@ -1,7 +1,10 @@
+import type TElement from "../../scripts/types/Element";
+
 import { useQuery } from "@tanstack/react-query";
 
 import ElemBox from "../ElementBox";
 import QueryWrapper from "../QueryWrapper";
+import Loader from "../Loader";
 
 function Base() {
 	const { isLoading, error, data } = useQuery({
@@ -15,11 +18,7 @@ function Base() {
 		}
 	});
 
-	if (isLoading) return (
-		<>
-			Loading...
-		</>
-	);
+	if (isLoading) return <Loader />;
 
 	if (error instanceof Error) return (
 		<>
@@ -27,7 +26,7 @@ function Base() {
 		</>
 	);
 
-	const elemList = data.map((element: { id: number | null | undefined; name: string; }) => {
+	const elemList = data.map((element: TElement) => {
 		return (
 			<div className="font-mono px-2 py-1 flex items-center" key={element.id}>
 				#{element.id}:&thinsp;<a

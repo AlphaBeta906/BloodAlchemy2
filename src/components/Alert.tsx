@@ -1,9 +1,12 @@
 import type { ReactNode } from "react";
 
-import { IoAlertCircleOutline, IoBeerOutline } from "react-icons/io5";
-import { IoWarningOutline } from "react-icons/io5";
-import { IoInformationCircleOutline } from "react-icons/io5";
-import { IoCheckmarkCircleOutline } from "react-icons/io5";
+import { 
+	IoAlertCircleOutline, 
+	IoBeerOutline,
+	IoWarningOutline,
+	IoInformationCircleOutline,
+	IoCheckmarkCircleOutline
+} from "react-icons/io5";
 
 /**
  * It takes a string and returns an icon

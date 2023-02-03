@@ -1,0 +1,10 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Profile from "../../components/pages/Profile";
+
+const { user } = Astro.params;
+---
+
+<Layout title={`User: ${user}`} />
+    <Profile username={user ?? ""} client:only />
+</Layout>

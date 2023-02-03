@@ -1,8 +1,7 @@
 ---
-import { Icon } from "astro-icon";
+import Navbox from "../components/Navbox.jsx";
 
-import ProfilePicture from "../components/ProfilePicture.jsx";
-import "../global.scss";
+import "../styles/global.scss";
 
 export interface Props {
 	title: string;
@@ -24,35 +23,7 @@ const { title } = Astro.props;
 	<body>
 		<main>
 			<!-- Header -->
-			<div>
-				<nav class="navbar bg-base-300 md:flex">
-					<div class="flex-1">
-						<a class="btn btn-ghost text-red-600" href="/">
-							<h2>Blood Alchemy</h2>
-						</a>
-					</div>
-					<div class="flex-none">
-						<ul class="hidden menu p-0 sm:contents">
-							<label class="swap swap-rotate btn btn-ghost text-base-content">
-								<input
-									id="lol"
-									type="checkbox"
-									data-toggle-theme="dark,light"
-									data-act-class="ACTIVECLASS"
-								/>
-								<div class="swap-on w-5">
-									<Icon name="ion:moon" />
-								</div>
-								<div class="swap-off w-5">
-									<Icon pack="ion" name="sunny" />
-								</div>
-							</label>
-
-							<ProfilePicture client:only />
-						</ul>
-					</div>
-				</nav>
-			</div>
+			<Navbox client:only />
 		</main>
 		<div>
 			<slot />
@@ -78,12 +49,4 @@ const { title } = Astro.props;
 		"data-theme",
 		localStorage.getItem("theme")
 	);
-
-	if (localStorage.theme === "dark") {
-		document.getElementById("lol").checked = "checked";
-	}
-</script>
-<script>
-	import { themeChange } from "theme-change";
-	themeChange();
 </script>

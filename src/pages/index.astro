@@ -1,10 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ErrorMessage from "../components/ErrorMessage";
+import ErrorMessage from "../components/ErrorMessage.jsx";
 ---
 
 <Layout title="Login">
-    <ErrorMessage code="501">
+    <ErrorMessage code="501" client:load>
         Sadly this page is not yet finished, please wait for Alpha to work on it.
     </ErrorMessage>
 </Layout>

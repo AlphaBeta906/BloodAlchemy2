@@ -40,6 +40,14 @@ export default function LogIn() {
 			return;
 		}
 
+		if (result.status === 401) {
+			methods.setError("password", {
+				type: "custom",
+				message: "The password is incorrect."
+			});
+			return;
+		}
+
 		if (result.status === 200) {
 			const rjson = await result.json();
 

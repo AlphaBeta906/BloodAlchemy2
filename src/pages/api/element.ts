@@ -1,4 +1,4 @@
-import type { APIRoute } from 'astro';
+import type { APIRoute } from "astro";
 
 import { PrismaClient } from "@prisma/client";
 import toJSON from "../../scripts/toJSON";
@@ -16,7 +16,7 @@ export const get: APIRoute = async ({ request }) => {
 	if (params.get("name") !== null) {
 		const getElem = await prisma.element.findUnique({
 			where: {
-				name: params.get("name")!
+				name: params.get("name") ?? undefined
 			}
 		});
 

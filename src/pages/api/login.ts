@@ -1,4 +1,4 @@
-import type { APIRoute } from 'astro';
+import type { APIRoute } from "astro";
 
 import { PrismaClient } from "@prisma/client";
 
@@ -40,7 +40,7 @@ export const post: APIRoute = async ({ request }) => {
 
 	const pwd = validateHash(body.password, user.password);
 
-	if (pwd) {
+	if (!pwd) {
 		return new Response(null, {
 			status: 401
 		});
