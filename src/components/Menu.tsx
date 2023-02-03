@@ -24,6 +24,11 @@ export default function Menu() {
 		return (
 			<>
 				<li>
+					<a href={`/user/${$account}`} className="font-semibold no-underline">
+                        Profile
+					</a>
+				</li>
+				<li>
 					<a href="/signout/" className="font-semibold no-underline">
                         Signout
 					</a>
