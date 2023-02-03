@@ -6,7 +6,7 @@ type Props = {
 	width?: number;
 };
 
-export default function ElemBox({ body, width = 100 }: Props) {
+export default function ElemBox({ body, width = 96 }: Props) {
 	return (
 		<div id="elem" className="font-bold rounded-md bg-white flex items-center justify-center font-mono" style={{
 			height: width + "px", 

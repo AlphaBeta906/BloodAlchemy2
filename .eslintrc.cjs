@@ -9,7 +9,6 @@ module.exports = {
 		"plugin:react/recommended",
 		"plugin:react/jsx-runtime",
 		"plugin:astro/recommended",
-		"plugin:@typescript-eslint/eslint-recommended",
 		"plugin:@typescript-eslint/recommended"
 	],
 	overrides: [

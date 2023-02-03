@@ -2,8 +2,6 @@ import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import PropTypes from "prop-types";
-
 type Props = {
 	children?: ReactNode;
 }
@@ -22,7 +20,3 @@ export default function QueryWrapper({ children }: Props) {
 		</QueryClientProvider>
 	);
 }
-
-QueryWrapper.propTypes = {
-	children: PropTypes.node.isRequired
-};

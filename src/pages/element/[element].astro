@@ -6,5 +6,5 @@ const { element } = Astro.params;
 ---
 
 <Layout title={`Element: ${element}`} />
-    <Element name={element} client:only />
+    <Element name={element ?? ""} client:only />
 </Layout>

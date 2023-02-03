@@ -13,7 +13,7 @@ model element {
   color            String   @db.VarChar
   generation       BigInt
   complexity       BigInt
-  date_of_creation DateTime @db.Timestamp(6) @default(now())
+  date_of_creation DateTime @default(now()) @db.Timestamp(6)
   creator          String   @db.VarChar
 }
 
@@ -25,5 +25,5 @@ model user {
   watts            BigInt
   barrels          Json[]
   salt             String?  @db.VarChar
-  date_of_creation DateTime @db.Timestamp(6) @default(now())
+  date_of_creation DateTime @default(now()) @db.Timestamp(6)
 }
