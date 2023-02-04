@@ -23,7 +23,7 @@ export const get: APIRoute = async ({ request }) => {
 
 		if (getUser === null) {
 			return new Response(null, {
-				status: 204
+				status: 404
 			});
 		}
 

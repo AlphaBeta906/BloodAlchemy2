@@ -32,10 +32,10 @@ export default function LogIn() {
 			})
 		});
 
-		if (result.status === 400) {
+		if (result.status === 404) {
 			methods.setError("username", {
 				type: "custom",
-				message: `Account "${data.username}" exists.`
+				message: `Account "${data.username}" doesn't exist.`
 			});
 			return;
 		}

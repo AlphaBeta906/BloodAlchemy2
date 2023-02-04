@@ -22,7 +22,7 @@ export const get: APIRoute = async ({ request }) => {
 
 		if (getElem === null) {
 			return new Response(null, {
-				status: 204
+				status: 404
 			});
 		}
 
