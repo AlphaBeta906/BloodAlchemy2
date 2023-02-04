@@ -16,8 +16,8 @@ function Base({ username }: Props) {
 		queryFn: async () => {
 			const result = await fetch(`/api/user?username=${username}`);
 
-			if (result.status === 204) {
-				return 204;
+			if (result.status === 404) {
+				return 404;
 			}
 
 			const rjson = result.json();
@@ -34,7 +34,7 @@ function Base({ username }: Props) {
 		</>
 	);
 
-	if (data === 204) {
+	if (data === 404) {
 		return (
 			<ErrorMessage code="404">
 				This element does not exist.
@@ -44,11 +44,15 @@ function Base({ username }: Props) {
 
 	const date = DateTime.fromJSDate(new Date(data.date_of_creation)).toLocaleString(DateTime.DATETIME_FULL);
 
+	console.log(["AlphaBeta906"].includes(username) && "man");
+
 	return (
 		<>
 			<center className="p-10">
 				<Avatar username={username} width={100} />
 				<h2 className="font-extrabold">{username}</h2>
+				{["AlphaBeta906"].includes(username) && <div className="badge bg-transparent border-red-500 text-red-500 mx-1 my-2">🛡️ Creator</div>}
+				{["AlphaBeta906"].includes(username) && <div className="badge bg-transparent border-lime-600 text-lime-600 mx-1 my-2">🧪 Beta Tester</div>}
 			</center>
 
 			<div className="mx-10">
