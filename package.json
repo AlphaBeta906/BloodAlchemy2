@@ -1,48 +1,61 @@
 {
-  "name": "@example/basics",
-  "type": "module",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "dev": "astro dev",
-    "serve": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/react": "^1.2.2",
-    "@nanostores/persistent": "^0.7.0",
-    "@nanostores/react": "^0.4.1",
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.10",
-    "astro": "^1.8.0",
-    "astro-icon": "^0.8.0",
-    "crypto-js": "^4.1.1",
-    "daisyui": "^2.46.0",
-    "luxon": "^3.2.1",
-    "postcss-scss": "^4.0.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-hook-form": "^7.42.0",
-    "react-icons": "^4.7.1",
-    "sass": "^1.57.1",
-    "tailwindcss": "^3.2.4",
-    "theme-change": "^2.3.0"
-  },
-  "devDependencies": {
-    "@astrojs/node": "^4.0.0",
-    "@babel/core": "^7.20.12",
-    "@prisma/client": "^4.9.0",
-    "@types/bcrypt": "^5.0.0",
-    "autoprefixer": "^10.4.13",
-    "babel-loader": "^8.3.0",
-    "cz-conventional-changelog": "^3.3.0",
-    "prisma": "^4.9.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  }
+	"name": "bloodalchemy2",
+	"type": "module",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "astro dev",
+		"serve": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@astrojs/react": "^2.0.2",
+		"@dicebear/avatars": "^4.10.8",
+		"@dicebear/identicon": "^5.1.6",
+		"@dicebear/initials": "^5.1.6",
+		"@nanostores/persistent": "^0.7.0",
+		"@nanostores/react": "^0.4.1",
+		"@prisma/client": "^4.9.0",
+		"@tanstack/react-query": "^4.23.0",
+		"@tanstack/react-query-devtools": "^4.23.0",
+		"@types/react": "^18.0.26",
+		"@types/react-dom": "^18.0.10",
+		"@typescript-eslint/eslint-plugin": "^5.49.0",
+		"@typescript-eslint/parser": "^5.49.0",
+		"astro": "^2.0.6",
+		"astro-icon": "^0.8.0",
+		"bcryptjs": "^2.4.3",
+		"crypto-js": "^4.1.1",
+		"daisyui": "^2.46.0",
+		"jsonwebtoken": "^9.0.0",
+		"luxon": "^3.2.1",
+		"postcss-scss": "^4.0.6",
+		"prisma": "^4.9.0",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"react-hook-form": "^7.42.0",
+		"react-icons": "^4.7.1",
+		"sass": "^1.58.0",
+		"tailwindcss": "^3.2.4",
+		"theme-change": "^2.3.0"
+	},
+	"devDependencies": {
+		"@types/bcrypt": "^5.0.0",
+		"@types/bcryptjs": "^2.4.2",
+		"@types/jsonwebtoken": "^9.0.1",
+		"@types/luxon": "^3.2.0",
+		"autoprefixer": "^10.4.13",
+		"cz-conventional-changelog": "^3.3.0",
+		"eslint": "^8.32.0",
+		"eslint-plugin-astro": "^0.23.0",
+		"eslint-plugin-react": "^7.32.1",
+		"eslint-plugin-react-hooks": "^4.6.0"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	}
 }

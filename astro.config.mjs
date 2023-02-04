@@ -1,12 +1,14 @@
-import { defineConfig } from 'astro/config';
-import node from "@astrojs/node";
+import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
-  adapter: node({ mode: 'middleware' }),
-  integrations: [react()]
+	output: "server",
+	integrations: [react()],
+	server: {
+		port: 4000,
+		host: true
+	}
 });
