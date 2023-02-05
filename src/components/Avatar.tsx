@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import { createAvatar } from "@dicebear/avatars";
-import * as identicon from "@dicebear/identicon";
-import * as initials from "@dicebear/initials";
+
+import { createAvatar } from "@dicebear/core";
+import { identicon, initials } from "@dicebear/collection";
 
 type Props = {
 	username: string;
@@ -20,24 +20,18 @@ export default function Avatar({ username, width = 36 }: Props) {
 	
 	if (username === "") {
 		avatar = useMemo(() => {
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
 			return createAvatar(initials, {
-				dataUri: true,
 				seed: "??",
 				backgroundColor: ["808080", "808080", "808080"],
 				size: 30
-			});
+			}).toDataUriSync();
 		}, []);
 	} else {
 		avatar = useMemo(() => {
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
 			return createAvatar(identicon, {
-				dataUri: true,
 				seed: username,
 				size: 30
-			});
+			}).toDataUriSync();
 		}, []);
 	}
 

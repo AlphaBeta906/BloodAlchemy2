@@ -1,8 +1,9 @@
-import blackOrWhite from "../scripts/blackOrWhite";
-import type TElement from "../scripts/types/Element";
+import type { element } from "@prisma/client";
+
+import blackOrWhite from "@/lib/blackOrWhite";
 
 type Props = {
-	body: TElement;
+	body: element;
 	width?: number;
 };
 

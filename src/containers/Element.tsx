@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { DateTime } from "luxon";
 
-import ErrorMessage from "../ErrorMessage";
-import ElemBox from "../ElementBox";
-import Avatar from "../Avatar";
-import QueryWrapper from "../QueryWrapper";
-import Loader from "../Loader";
+import ErrorMessage from "@/components/ErrorMessage";
+import ElemBox from "@/components/ElementBox";
+import Avatar from "@/components/Avatar";
+import QueryWrapper from "@/components/QueryWrapper";
+import Loader from "@/components/Loader";
 
 type Props = {
 	name: string;
@@ -17,8 +17,8 @@ function Body({ name }: Props): JSX.Element {
 		queryFn: async () => {
 			const result = await fetch(`/api/element?name=${name}`);
 
-			if (result.status === 204) {
-				return 204;
+			if (result.status === 404) {
+				return 404;
 			}
 
 			const rjson = result.json();
@@ -35,7 +35,7 @@ function Body({ name }: Props): JSX.Element {
 		</>
 	);
 
-	if (data === 204) {
+	if (data === 404) {
 		return (
 			<ErrorMessage code="404">
 				This element does not exist.

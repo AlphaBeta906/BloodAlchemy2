@@ -1,19 +1,18 @@
 import type { SubmitHandler } from "react-hook-form";
 
 import { ChangeEvent, useState } from "react";
-import { useStore } from "@nanostores/react";
 import { useForm, FormProvider } from "react-hook-form";
+import { useStore } from "@nanostores/react";
 
-import { account, token } from "../../scripts/stores";
-import Input from "../Input";
+import { account, token } from "@/lib/stores";
+import Input from "@/components/Input";
 
 type FormValues = {
 	username: string;
 	password: string;
-	confirm: string;
 };
 
-export default function SignIn() {
+export default function LogIn() {
 	const methods = useForm<FormValues>();
 	const [isCheckedPass, setIsCheckedPass] = useState(false);
 	const $account = useStore(account);
@@ -22,26 +21,10 @@ export default function SignIn() {
 		setIsCheckedPass(event.target.checked);
 	};
 
-	const addUser: SubmitHandler<FormValues> = async (data) => {
-		console.log(data.password);
+	const registerUser: SubmitHandler<FormValues> = async (data) => {
+		console.log(data);
 
-		if (data.username === "undefined" || data.username === "null") {
-			methods.setError("username", {
-				type: "custom",
-				message: "You can not name yourself \"undefined\" or \"null\"."
-			});
-			return;
-		}
-
-		if (data.confirm !== data.password) {
-			methods.setError("confirm", {
-				type: "custom",
-				message: "Passwords do not match."
-			});
-			return;
-		}
-
-		const result = await fetch("/api/signin", {
+		const result = await fetch("/api/login", {
 			method: "POST",
 			body: JSON.stringify({
 				"username": data.username,
@@ -49,15 +32,23 @@ export default function SignIn() {
 			})
 		});
 
-		if (result.status === 400) {
+		if (result.status === 404) {
 			methods.setError("username", {
 				type: "custom",
-				message: `An account "${data.username}" exists.`
+				message: `Account "${data.username}" doesn't exist.`
 			});
 			return;
 		}
 
-		if (result.status === 201) {
+		if (result.status === 401) {
+			methods.setError("password", {
+				type: "custom",
+				message: "The password is incorrect."
+			});
+			return;
+		}
+
+		if (result.status === 200) {
 			const rjson = await result.json();
 
 			console.log(rjson);
@@ -73,33 +64,27 @@ export default function SignIn() {
 		return (
 			<>
 				<center>
-					<h1 className="text-center font-extrabold py-5">Signin</h1>
+					<h1 className="text-center font-extrabold py-5">Login</h1>
 
 					<div className="card w-96 bg-base-300 shadow-xl">
 						<FormProvider {...methods} >
-							<form onSubmit={methods.handleSubmit(addUser)}>
+							<form onSubmit={methods.handleSubmit(registerUser)}>
 								<div className="card-body">
-									<Input
+									<Input 
 										name="username"
 										label="What is your username?"
 										type="text"
 										placeholder="Username"
 									/>
-									<Input
+									<Input 
 										name="password"
 										label="What is your password?"
 										type={isCheckedPass ? "text" : "password"}
 										placeholder="Password"
 									/>
-									<Input
-										name="confirm"
-										label="Please repeat your password here."
-										type={isCheckedPass ? "text" : "password"}
-										placeholder="Password"
-									/>
 
 									<label className="label cursor-pointer">
-										<span className="label-text">Reveal passwords</span>
+										<span className="label-text">Reveal password</span>
 										<input
 											type="checkbox"
 											className="checkbox"
@@ -109,7 +94,7 @@ export default function SignIn() {
 									</label><br />
 
 									<button className="btn btn-primary" type="submit">
-										Signin
+                                        Login
 									</button>
 								</div>
 							</form>
@@ -118,7 +103,7 @@ export default function SignIn() {
 				</center>
 			</>
 		);
-	}
-
+	} 
+    
 	window.location.href = "/";
 }

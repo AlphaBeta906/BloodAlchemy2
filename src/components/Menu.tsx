@@ -1,6 +1,6 @@
 import { useStore } from "@nanostores/react";
 
-import { account } from "../scripts/stores";
+import { account } from "@/lib/stores";
 
 export default function Menu() {
 	const $account = useStore(account);

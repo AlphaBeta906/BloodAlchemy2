@@ -2,9 +2,9 @@ import type { APIRoute } from "astro";
 
 import { PrismaClient } from "@prisma/client";
 
-import toJSON from "../../scripts/toJSON";
-import { generateToken } from "../../scripts/auth/jwt";
-import { validateHash } from "../../scripts/auth/hash";
+import toJSON from "@/lib/toJSON";
+import { generateToken } from "@/lib/auth/jwt";
+import { validateHash } from "@/lib/auth/hash";
 
 const prisma = new PrismaClient();
 

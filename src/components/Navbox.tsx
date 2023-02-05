@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { themeChange } from "theme-change";
 import { useStore } from "@nanostores/react";
 
-import ProfilePicture from "./ProfilePicture";
-import { theme } from "../scripts/stores";
+import ProfilePicture from "@/components/ProfilePicture";
+import { theme } from "@/lib/stores";
 
 export default function Navbox() {
 	const $theme = useStore(theme);

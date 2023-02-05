@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { DateTime } from "luxon";
 
-import ErrorMessage from "../ErrorMessage";
-import Avatar from "../Avatar";
-import QueryWrapper from "../QueryWrapper";
-import Loader from "../Loader";
+import ErrorMessage from "@/components/ErrorMessage";
+import Avatar from "@/components/Avatar";
+import QueryWrapper from "@/components/QueryWrapper";
+import Loader from "@/components/Loader";
 
 type Props = {
 	username: string;
@@ -51,8 +51,8 @@ function Base({ username }: Props) {
 			<center className="p-10">
 				<Avatar username={username} width={100} />
 				<h2 className="font-extrabold">{username}</h2>
-				{["AlphaBeta906"].includes(username) && <div className="badge bg-transparent border-red-500 text-red-500 mx-1 my-2">🛡️ Creator</div>}
-				{["AlphaBeta906"].includes(username) && <div className="badge bg-transparent border-lime-600 text-lime-600 mx-1 my-2">🧪 Beta Tester</div>}
+				{["AlphaBeta906"].includes(username) && <div className="badge bg-transparent border-red-500 text-red-500 mx-1 my-2 h-6">🛡️ Creator</div>}
+				{["AlphaBeta906"].includes(username) && <div className="badge bg-transparent border-lime-600 text-lime-600 mx-1 my-2 h-6">🧪 Beta Tester</div>}
 			</center>
 
 			<div className="mx-10">

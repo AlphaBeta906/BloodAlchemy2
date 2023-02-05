@@ -1,10 +1,10 @@
-import type TElement from "../../scripts/types/Element";
+import type { element } from "@prisma/client";
 
 import { useQuery } from "@tanstack/react-query";
 
-import ElemBox from "../ElementBox";
-import QueryWrapper from "../QueryWrapper";
-import Loader from "../Loader";
+import ElemBox from "@/components/ElementBox";
+import QueryWrapper from "@/components/QueryWrapper";
+import Loader from "@/components/Loader";
 
 function Base() {
 	const { isLoading, error, data } = useQuery({
@@ -26,16 +26,16 @@ function Base() {
 		</>
 	);
 
-	const elemList = data.map((element: TElement) => {
+	const elemList = data.map((element: element) => {
 		return (
-			<div className="font-mono px-2 py-1 flex items-center" key={element.id}>
-				#{element.id}:&thinsp;<a
-					className="inline-block no-underline"
-					href={`/element/${element.name}`}
-				>
-					<ElemBox body={element} width={50} />
-				</a>
-			</div>
+			<>
+				<span className="font-mono px-2 py-1 flex items-center" key={element.id.toString()}>
+					{`${element.id}: `}
+					<a className="inline-block no-underline" href={`/element/${element.name}`}>
+						<ElemBox body={element} width={50} />
+					</a>
+				</span>
+			</>
 		);
 	});
 

@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 
 import { PrismaClient } from "@prisma/client";
-import toJSON from "../../scripts/toJSON";
+import toJSON from "@/lib/toJSON";
 
 const prisma = new PrismaClient();
 

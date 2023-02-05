@@ -1,5 +1,5 @@
 import { useStore } from "@nanostores/react";
-import { account, token } from "../../scripts/stores";
+import { account, token } from "@/lib/stores";
 
 export default function SignOut() {
 	const $account = useStore(account);
