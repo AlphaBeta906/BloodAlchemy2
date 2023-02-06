@@ -25,8 +25,6 @@ export default function LoginPage() {
 	};
 
 	const registerUser: SubmitHandler<FormValues> = async (data) => {
-		console.log(data);
-
 		const result = await fetch("/api/login", {
 			method: "POST",
 			body: JSON.stringify({
