@@ -1,12 +1,10 @@
-import type { element } from "@prisma/client";
-
 import { useQuery } from "@tanstack/react-query";
+import { element } from "@prisma/client";
 
 import ElemBox from "@/components/ElementBox";
-import QueryWrapper from "@/components/QueryWrapper";
 import Loader from "@/components/Loader";
 
-function Base() {
+export default function ElementsPage() {
 	const { isLoading, error, data } = useQuery({
 		queryKey: ["element"],
 		queryFn: async () => {
@@ -27,15 +25,19 @@ function Base() {
 	);
 
 	const elemList = data.map((element: element) => {
+		// TODO: Fix this mess of a map - February 4, 2023
+		
 		return (
-			<>
-				<span className="font-mono px-2 py-1 flex items-center" key={element.id.toString()}>
-					{`${element.id}: `}
-					<a className="inline-block no-underline" href={`/element/${element.name}`}>
-						<ElemBox body={element} width={50} />
-					</a>
-				</span>
-			</>
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			<div className="font-mono px-2 py-1 flex items-center" key={element.id.toString()}>
+				#{element.id}:&thinsp;<a
+					className="inline-block"
+					href={`/element/${element.name}`}
+				>
+					<ElemBox body={element} width={50} />
+				</a>
+			</div>
 		);
 	});
 
@@ -43,14 +45,5 @@ function Base() {
 		<div className="pt-2">
 			{elemList}
 		</div>
-	);
-}
-
-// I really hate Astro in this part - Jan 30, 2023
-export default function Elements() {
-	return (
-		<QueryWrapper>
-			<Base />
-		</QueryWrapper>
 	);
 }

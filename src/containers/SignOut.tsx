@@ -1,17 +1,26 @@
 import { useStore } from "@nanostores/react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+
 import { account, token } from "@/lib/stores";
 
-export default function SignOut() {
+export default function SignOutPage() {
+	const router = useRouter();
 	const $account = useStore(account);
 
 	const signOutUser = async () => {
 		account.set("");
 		token.set("");
 
-		window.location.href = "/";
+		router.push("/");
 	};
 
-	console.log($account === "");
+	useEffect(() => {
+		if ($account === "") {
+			router.push("/");
+			return;
+		}
+	});
 
 	if ($account !== "") {
 		return (
@@ -31,5 +40,7 @@ export default function SignOut() {
 		);
 	}
 
-	window.location.href = "/";
+	router.push("/");
+
+	return null;
 }

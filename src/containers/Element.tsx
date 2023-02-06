@@ -4,18 +4,17 @@ import { DateTime } from "luxon";
 import ErrorMessage from "@/components/ErrorMessage";
 import ElemBox from "@/components/ElementBox";
 import Avatar from "@/components/Avatar";
-import QueryWrapper from "@/components/QueryWrapper";
 import Loader from "@/components/Loader";
 
 type Props = {
 	name: string;
 }
 
-function Body({ name }: Props): JSX.Element {
+export default function ElementPage({ name }: Props): JSX.Element {
 	const { isLoading, error, data } = useQuery({
 		queryKey: ["element"],
 		queryFn: async () => {
-			const result = await fetch(`/api/element?name=${name}`);
+			const result = await fetch(`/api/element/${name}`);
 
 			if (result.status === 404) {
 				return 404;
@@ -56,18 +55,10 @@ function Body({ name }: Props): JSX.Element {
 				<div className="mb-1.5"><b>Generation:</b> {data.generation}</div>
 				<div className="mb-1.5"><b>Complexity:</b> {data.complexity}</div>
 				<div className="flex items-center mb-1.5">
-					<b>Creator:</b>&thinsp;&thinsp;<Avatar username={data.creator} width={28} />&thinsp;&thinsp;{data.creator}
+					<b>Creator:</b>&nbsp;<Avatar username={data.creator} width={28} />&nbsp;{data.creator}
 				</div>
 				<div className="mb-1.5"><b>Date of Creation:</b> {date}</div>
 			</div>
 		</>
-	);
-}
-
-export default function Element({ name }: Props) {
-	return (
-		<QueryWrapper>
-			<Body name={name} />
-		</QueryWrapper>
 	);
 }

@@ -1,6 +1,7 @@
-import type { APIRoute } from "astro";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 import { PrismaClient } from "@prisma/client";
+import { z } from "zod";
 
 import toJSON from "@/lib/toJSON";
 import { generateToken } from "@/lib/auth/jwt";
@@ -12,17 +13,17 @@ const prisma = new PrismaClient();
  * It creates a new user in the database, and returns a token
  * @returns A new response with the user and token
  */
-export const post: APIRoute = async ({ request }) => {
-	const body = await request.json();
+export default async function handler(req: NextApiRequest, res: NextApiResponse<object | null>) {
+	const body = JSON.parse(req.body);
 
-	const keysToCheck = ["username", "password"];
+	const schema = z.object({
+		username: z.string(),
+		password: z.string()
+	});
 
-	const hasAllKeys = keysToCheck.every(key => Object.keys(body).includes(key));
-
-	if (!hasAllKeys) {
-		return new Response(null, {
-			status: 422
-		});
+	if (!schema.safeParse(body).success) {
+		res.status(422).json(null);
+		return;
 	}
 
 	const existsUser = await prisma.user.findUnique({
@@ -32,9 +33,8 @@ export const post: APIRoute = async ({ request }) => {
 	});
 
 	if (existsUser) {
-		return new Response(null, {
-			status: 400
-		});
+		res.status(400).json(null);
+		return;
 	}
 
 	const { hash, salt } = getHash(body.password);
@@ -52,7 +52,5 @@ export const post: APIRoute = async ({ request }) => {
 
 	const token = generateToken(body.username);
 
-	return new Response(toJSON({ user: user, token: token }), {
-		status: 201
-	});
-};
+	res.status(201).json(toJSON({ user: user, token: token }));
+}

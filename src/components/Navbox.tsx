@@ -1,18 +1,21 @@
 import { IoMoonSharp, IoSunnySharp } from "react-icons/io5";
-import { useEffect } from "react";
-import { themeChange } from "theme-change";
 import { useStore } from "@nanostores/react";
+import { useEffect } from "react";
 
-import ProfilePicture from "@/components/ProfilePicture";
-import { theme } from "@/lib/stores";
+import ProfilePicture from "./ProfilePicture";
+import { theme } from "../lib/stores";
 
 export default function Navbox() {
 	const $theme = useStore(theme);
 	const checked = ($theme === "dark");
 
+	const toggleTheme = () => {
+		theme.set($theme === "dark" ? "light" : "dark");
+	};
+
 	useEffect(() => {
-		themeChange(false);
-	}, []);
+		document.querySelector("html")?.setAttribute("data-theme", $theme);
+	});
 
 	return (
 		<div>
@@ -27,8 +30,7 @@ export default function Navbox() {
 						<label className="swap swap-rotate btn btn-ghost text-base-content">
 							<input
 								type="checkbox"
-								data-toggle-theme="dark,light"
-								data-act-class="ACTIVECLASS"
+								onClick={toggleTheme}
 								defaultChecked={checked}
 							/>
 							<div className="swap-on w-5">

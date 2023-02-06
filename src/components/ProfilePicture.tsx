@@ -1,7 +1,7 @@
 import { useStore } from "@nanostores/react";
 
-import Menu from "@/components/Menu";
-import Avatar from "@/components/Avatar";
+import Menu from "./Menu";
+import Avatar from "./Avatar";
 import { account } from "@/lib/stores";
 
 export default function ProfilePicture() {

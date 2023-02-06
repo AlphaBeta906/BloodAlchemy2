@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { DateTime } from "luxon";
+import { useRouter } from "next/router";
 
 import ErrorMessage from "@/components/ErrorMessage";
 import Avatar from "@/components/Avatar";
-import QueryWrapper from "@/components/QueryWrapper";
 import Loader from "@/components/Loader";
+import Layout from "@/layouts/Layout";
 
 type Props = {
 	username: string;
@@ -14,7 +15,7 @@ function Base({ username }: Props) {
 	const { isLoading, error, data } = useQuery({
 		queryKey: ["element"],
 		queryFn: async () => {
-			const result = await fetch(`/api/user?username=${username}`);
+			const result = await fetch(`/api/user/${username}`);
 
 			if (result.status === 404) {
 				return 404;
@@ -37,14 +38,12 @@ function Base({ username }: Props) {
 	if (data === 404) {
 		return (
 			<ErrorMessage code="404">
-				This element does not exist.
+				The user does not exist.
 			</ErrorMessage>
 		);
 	}
 
 	const date = DateTime.fromJSDate(new Date(data.date_of_creation)).toLocaleString(DateTime.DATETIME_FULL);
-
-	console.log(["AlphaBeta906"].includes(username) && "man");
 
 	return (
 		<>
@@ -62,10 +61,15 @@ function Base({ username }: Props) {
 	);
 }
 
-export default function Profile({ username }: Props) {
-	return (
-		<QueryWrapper>
-			<Base username={username} />
-		</QueryWrapper>
-	);
+export default function Profile() {
+	const router = useRouter();
+	const { username } = router.query;
+
+	if (typeof username === "string") {
+		return (
+			<Layout title={`Profile: ${username}`}>
+				<Base username={username} />
+			</Layout>
+		);
+	}
 }

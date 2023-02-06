@@ -13,7 +13,7 @@ type Props = {
  * class of btn btn-primary, which contains the text "Go home?"
  * @returns A div with a class of hero h-[calc(100vh-4rem)]
  */
-export default function Error({ code, children }: Props) {
+export default function ErrorMessage({ code, children }: Props) {
 	return (
 		<div className="hero h-[calc(100vh-4rem)]">
 			<div className="hero-content text-center">
