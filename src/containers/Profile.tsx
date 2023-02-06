@@ -2,19 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 import { DateTime } from "luxon";
 
 import ErrorMessage from "@/components/ErrorMessage";
-import ElemBox from "@/components/ElementBox";
 import Avatar from "@/components/Avatar";
 import Loader from "@/components/Loader";
 
 type Props = {
-	name: string;
+	username: string;
 }
 
-export default function ElementPage({ name }: Props): JSX.Element {
+export default function ProfilePage({ username }: Props) {
 	const { isLoading, error, data } = useQuery({
 		queryKey: ["element"],
 		queryFn: async () => {
-			const result = await fetch(`/api/element?name=${name}`);
+			const result = await fetch(`/api/user?username=${username}`);
 
 			if (result.status === 404) {
 				return 404;
@@ -37,7 +36,7 @@ export default function ElementPage({ name }: Props): JSX.Element {
 	if (data === 404) {
 		return (
 			<ErrorMessage code="404">
-				This element does not exist.
+				The user does not exist.
 			</ErrorMessage>
 		);
 	}
@@ -47,16 +46,13 @@ export default function ElementPage({ name }: Props): JSX.Element {
 	return (
 		<>
 			<center className="p-10">
-				<ElemBox body={data} width={100} />
+				<Avatar username={username} width={100} />
+				<h2 className="font-extrabold">{username}</h2>
+				{["AlphaBeta906"].includes(username) && <div className="badge bg-transparent border-red-500 text-red-500 mx-1 my-2 h-6">🛡️ Creator</div>}
+				{["AlphaBeta906"].includes(username) && <div className="badge bg-transparent border-lime-600 text-lime-600 mx-1 my-2 h-6">🧪 Beta Tester</div>}
 			</center>
 
 			<div className="mx-10">
-				<div className="mb-1.5"><b>ID:</b> #{data.id}</div>
-				<div className="mb-1.5"><b>Generation:</b> {data.generation}</div>
-				<div className="mb-1.5"><b>Complexity:</b> {data.complexity}</div>
-				<div className="flex items-center mb-1.5">
-					<b>Creator:</b>&nbsp;<Avatar username={data.creator} width={28} />&nbsp;{data.creator}
-				</div>
 				<div className="mb-1.5"><b>Date of Creation:</b> {date}</div>
 			</div>
 		</>

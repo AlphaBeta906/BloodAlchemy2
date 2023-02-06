@@ -15,7 +15,7 @@ const prisma = new PrismaClient();
  * @returns A user object
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<object | null>) {
-	const body = JSON.parse(req.body);
+	const body = req.body;
 
 	const schema = z.object({
 		username: z.string(),

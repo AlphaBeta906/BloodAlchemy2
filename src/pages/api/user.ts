@@ -2,29 +2,39 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { PrismaClient } from "@prisma/client";
+import { z } from "zod";
 
 import toJSON from "@/lib/toJSON";
 
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<object | null>) {
-	const { name } = req.query;
+	const query = req.query;
 
-	if (typeof name === "string") {
-		const getElem = await prisma.element.findUnique({
+	if (Object.keys(query).length !== 0) {
+		const schema = z.object({
+			username: z.string()
+		});
+		
+		if (!schema.safeParse(query).success) {
+			res.status(422).json(null);
+			return;
+		}
+
+		const getUser = await prisma.user.findUnique({
 			where: {
-				name: name
+				username: query.username?.toString()
 			}
 		});
 
-		if (getElem === null) {
+		if (getUser === null) {
 			res.status(404).json(null);
 			return;
 		}
 
-		res.status(200).json(toJSON(getElem ?? {}));
+		res.status(200).json(toJSON(getUser ?? {}));
 		return;
 	}
 
-	res.status(422).json(null);
+	res.status(501).json(null);
 }
