@@ -45,5 +45,3 @@ await prisma.element.create({
 });
 
 console.log("All good.");
-
-export { };
