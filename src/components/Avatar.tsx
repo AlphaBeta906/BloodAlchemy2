@@ -1,7 +1,8 @@
-import { useMemo } from "react";
-import { createAvatar } from "@dicebear/avatars";
-import * as identicon from "@dicebear/identicon";
-import * as initials from "@dicebear/initials";
+import type { Result } from "@dicebear/core";
+
+import { createAvatar } from "@dicebear/core";
+import { identicon, initials } from "@dicebear/collection";
+import { useState, useEffect } from "react";
 
 type Props = {
 	username: string;
@@ -13,38 +14,31 @@ type Props = {
  * @returns A div with a class of avatar p-0 m-0.
  */
 export default function Avatar({ username, width = 36 }: Props) {
-	let avatar = null;
+	const [avatar, setAvatar] = useState<Result>();
 
-	// Really hate this part of the "TypeScript"-ification part of the process... - Jan 30, 2023
-	// This is getting worse. - Jan 31, 2023
-	
-	if (username === "") {
-		avatar = useMemo(() => {
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			return createAvatar(initials, {
-				dataUri: true,
-				seed: "??",
-				backgroundColor: ["808080", "808080", "808080"],
-				size: 30
-			});
-		}, []);
-	} else {
-		avatar = useMemo(() => {
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			return createAvatar(identicon, {
-				dataUri: true,
-				seed: username,
-				size: 30
-			});
-		}, []);
-	}
+	useEffect(() => {
+		if (username === "") {
+			setAvatar(
+				createAvatar(initials, {
+					seed: "??",
+					backgroundColor: ["505050", "505050", "505050"],
+					size: 30
+				})
+			);
+		} else {
+			setAvatar(
+				createAvatar(identicon, {
+					seed: username,
+					size: 30
+				})
+			);
+		}
+	}, [username]);
 
 	return (
 		<div className="avatar p-0 m-0">
 			<div className="rounded-md bg-white" style={{ width: width }}>
-				<img src={avatar} alt="avatar" />
+				<img src={avatar?.toDataUriSync()} alt="avatar" />
 			</div>
 		</div>
 	);

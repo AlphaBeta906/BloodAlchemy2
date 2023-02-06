@@ -2,7 +2,7 @@ import { useStore } from "@nanostores/react";
 
 import Menu from "./Menu";
 import Avatar from "./Avatar";
-import { account } from "../scripts/stores";
+import { account } from "@/lib/stores";
 
 export default function ProfilePicture() {
 	const $account = useStore(account);
