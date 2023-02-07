@@ -5,6 +5,10 @@ import { useEffect } from "react";
 import ProfilePicture from "./ProfilePicture";
 import { theme } from "../lib/stores";
 
+/**
+ * It renders a navbar with a logo, a theme toggle, and a profile picture
+ * @returns A navbar with a link to the home page and a toggle for the theme.
+ */
 export default function Navbox() {
 	const $theme = useStore(theme);
 	const checked = ($theme === "dark");

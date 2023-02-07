@@ -1,3 +1,9 @@
+/**
+ * It takes a hex color code, converts it to RGB, calculates the luminance, and returns either black or
+ * white depending on which color contrasts better
+ * @param {string} hex - The hexadecimal color code to be converted.
+ * @returns A string of either "#000000" or "#ffffff"
+ */
 export default function blackOrWhite(hex: string) {
 	// Convert hex to RGB
 	const r = parseInt(hex.substring(0, 2), 16);

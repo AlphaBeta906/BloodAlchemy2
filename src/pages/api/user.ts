@@ -8,6 +8,12 @@ import toJSON from "@/lib/toJSON";
 
 const prisma = new PrismaClient();
 
+/**
+ * It takes a query string, validates it, and returns a user object if it exists
+ * @param {NextApiRequest} req - NextApiRequest - The request object
+ * @param res - NextApiResponse<object | null>
+ * @returns The user object
+ */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<object | null>) {
 	const query = req.query;
 
@@ -15,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 		const schema = z.object({
 			username: z.string()
 		});
-		
+
 		if (!schema.safeParse(query).success) {
 			res.status(422).json(null);
 			return;

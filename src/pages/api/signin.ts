@@ -6,15 +6,18 @@ import { z } from "zod";
 import toJSON from "@/lib/toJSON";
 import { generateToken } from "@/lib/auth/jwt";
 import { getHash } from "@/lib/auth/hash";
+import bodyParse from "@/lib/bodyParse";
 
 const prisma = new PrismaClient();
 
 /**
  * It creates a new user in the database, and returns a token
- * @returns A new response with the user and token
+ * @param {NextApiRequest} req - NextApiRequest - This is the request object that Next.js provides.
+ * @param res - NextApiResponse<object | null>
+ * @returns A user object and a token
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<object | null>) {
-	const body = req.body;
+	const body = bodyParse(req.body);
 
 	const schema = z.object({
 		username: z.string(),

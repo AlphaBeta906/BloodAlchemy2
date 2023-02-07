@@ -40,7 +40,5 @@ export default function SignOutPage() {
 		);
 	}
 
-	router.push("/");
-
 	return null;
 }

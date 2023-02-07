@@ -9,7 +9,7 @@ export default function Profile() {
 
 	if (typeof username === "string") {
 		return (
-			<Layout title={`Profile: ${username}`}>
+			<Layout title={`Profile: ${username}`} devtools={true}>
 				<ProfilePage username={username} />
 			</Layout>
 		);

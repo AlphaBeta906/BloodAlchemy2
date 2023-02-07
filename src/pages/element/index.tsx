@@ -3,7 +3,7 @@ import ElementsPage from "@/containers/Elements";
 
 export default function Elements() {
 	return (
-		<Layout title="Elements">
+		<Layout title="Elements" devtools={true}>
 			<ElementsPage />
 		</Layout>
 	);

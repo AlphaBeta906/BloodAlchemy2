@@ -3,5 +3,6 @@
     "eslint.workingDirectories": [
         {"mode": "auto"}
     ],
-    "editor.insertSpaces": false
+    "editor.insertSpaces": false,
+    "docwriter.progress.trackTypes": true
 }

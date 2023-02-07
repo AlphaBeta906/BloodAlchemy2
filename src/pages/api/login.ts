@@ -6,21 +6,26 @@ import { z } from "zod";
 import toJSON from "@/lib/toJSON";
 import { validateHash } from "@/lib/auth/hash";
 import { generateToken } from "@/lib/auth/jwt";
+import bodyParse from "@/lib/bodyParse";
 
 const prisma = new PrismaClient();
 
 /**
- * It takes a request, checks if the request has a username parameter, and if it does, it returns the
- * user with that username
- * @returns A user object
+ * It takes a username and password from the request body, checks if the user exists, checks if the
+ * password is correct, and if so, returns a token
+ * @param {NextApiRequest} req - NextApiRequest - This is the request object that Next.js provides.
+ * @param res - NextApiResponse<object | null>
+ * @returns A user object and a token
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<object | null>) {
-	const body = req.body;
+	const body = bodyParse(req.body);
 
 	const schema = z.object({
 		username: z.string(),
 		password: z.string()
 	});
+
+	console.log(schema.safeParse(body));
 
 	if (!schema.safeParse(body).success) {
 		res.status(422).json(null);

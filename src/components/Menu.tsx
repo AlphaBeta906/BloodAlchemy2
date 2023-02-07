@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 
 import { account } from "@/lib/stores";
 
+/**
+ * It renders a menu depending on the account
+ * @returns A menu
+ */
 export default function Menu() {
 	const $account = useStore(account);
 	const [menu, setMenu] = useState(<></>);

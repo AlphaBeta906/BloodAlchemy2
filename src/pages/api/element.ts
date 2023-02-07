@@ -8,6 +8,13 @@ import toJSON from "@/lib/toJSON";
 
 const prisma = new PrismaClient();
 
+/**
+ * It either returns a list of elements or a single element, depending on whether the query string is
+ * empty or not
+ * @param {NextApiRequest} req - NextApiRequest - This is the request object that Next.js gives us.
+ * @param res - NextApiResponse<object | null>
+ * @returns An array of elements
+ */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<object | null>) {
 	const query = req.query;
 

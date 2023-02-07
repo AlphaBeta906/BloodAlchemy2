@@ -4,12 +4,24 @@ import QueryWrapper from "@/components/QueryWrapper";
 
 import Navbox from "@/components/Navbox";
 
+/**
+ * `Props` is an object with optional properties `title`, `devtools`, and `children`.
+ * @property {string} title - The title of the page.
+ * @property {boolean} devtools - boolean - If true, the Redux DevTools will be shown.
+ * @property {ReactNode} children - The children of the component.
+ */
 type Props = {
 	title?: string;
+	devtools?: boolean;
 	children?: ReactNode;
 }
 
-export default function Layout({ title = "Page", children }: Props) {
+/**
+ * It renders a page with a navbar and a query wrapper
+ * @param {Props} props - React props
+ * @returns A React component.
+ */
+export default function Layout({ title = "Page", devtools = false, children }: Props) {
 	return (
 		<>
 			<Head>
@@ -19,7 +31,7 @@ export default function Layout({ title = "Page", children }: Props) {
 				<title>{title}</title>
 			</Head>
 			<Navbox />
-			<QueryWrapper>
+			<QueryWrapper devtools={devtools}>
 				{children}
 			</QueryWrapper>
 		</>

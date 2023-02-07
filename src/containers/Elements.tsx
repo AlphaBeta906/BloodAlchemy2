@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { element } from "@prisma/client";
 
-import ElemBox from "@/components/ElementBox";
+import ElemBox from "@/components/ElemBox";
 import Loader from "@/components/Loader";
 
 export default function ElementsPage() {

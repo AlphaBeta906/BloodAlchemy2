@@ -9,7 +9,7 @@ export default function Element() {
 
 	if (typeof name === "string") {
 		return (
-			<Layout title={`Element: ${name}`}>
+			<Layout title={`Element: ${name}`} devtools={true}>
 				<ElementPage name={name} />
 			</Layout>
 		);
