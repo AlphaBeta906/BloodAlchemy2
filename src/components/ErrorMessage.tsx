@@ -13,7 +13,7 @@ type Props = {
 
 /**
  * It renders a full-screen error message with a title and a message
- * @param {Props} props - React props
+ * @param {Props} props - The props that are passed to the component.
  * @returns A error message
  */
 export default function ErrorMessage({ code, children }: Props) {

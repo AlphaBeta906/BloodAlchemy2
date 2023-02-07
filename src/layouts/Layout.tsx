@@ -18,7 +18,7 @@ type Props = {
 
 /**
  * It renders a page with a navbar and a query wrapper
- * @param {Props} props - React props
+ * @param {Props} props - The props that are passed to the component.
  * @returns A React component.
  */
 export default function Layout({ title = "Page", devtools = false, children }: Props) {

@@ -18,7 +18,7 @@ type Props = {
 /**
  * `Avatar` is a function that takes in a username and a width and returns a div with an image inside
  * of it
- * @param {Props} props - React props
+ * @param {Props} props - The props that are passed to the component.
  * @returns A div with a class of avatar p-0 m-0.
  */
 export default function Avatar({ username, width = 36 }: Props) {

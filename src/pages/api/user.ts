@@ -17,7 +17,14 @@ const prisma = new PrismaClient();
 export default async function handler(req: NextApiRequest, res: NextApiResponse<object | null>) {
 	const query = req.query;
 
-	if (Object.keys(query).length !== 0) {
+	if (Object.keys(query).length === 0) {
+		const getElems = await prisma.user.findMany({
+			skip: 0,
+			take: 4,
+		});
+	
+		res.status(200).json(toJSON(getElems));
+	} else {
 		const schema = z.object({
 			username: z.string()
 		});
@@ -41,6 +48,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 		res.status(200).json(toJSON(getUser ?? {}));
 		return;
 	}
-
-	res.status(501).json(null);
 }

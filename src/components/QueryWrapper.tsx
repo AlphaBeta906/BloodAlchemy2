@@ -15,11 +15,10 @@ type Props = {
 	children?: ReactNode;
 }
 
-
 /**
  * It creates a new QueryClient, wraps the children in a QueryClientProvider, and optionally adds a
  * ReactQueryDevtools component
- * @param {Props} props - React props
+ * @param {Props} props - The props that are passed to the component.
  * @returns A QueryClientProvider wrapper
  */
 export default function QueryWrapper({ devtools, children }: Props) {

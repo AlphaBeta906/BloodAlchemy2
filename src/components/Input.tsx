@@ -8,16 +8,16 @@ import { useFormContext } from "react-hook-form";
  * @property {string} placeholder - The placeholder text that will appear in the input field.
  */
 type Props = {
-	label: string,
-	name: string,
-	type: string,
-	placeholder: string
+	label: string;
+	name: string;
+	type: string;
+	placeholder: string;
 };
 
 /**
  * It's a function that takes in a label, name, type, and placeholder, and returns a form input with a
  * label, input, and error message
- * @param {Props} props - React props
+ * @param {Props} props - The props that are passed to the component.
  * @returns A React component.
  */
 export default function Input({ label, name, type, placeholder }: Props) {

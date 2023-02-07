@@ -4,6 +4,7 @@ import { DateTime } from "luxon";
 import ErrorMessage from "@/components/ErrorMessage";
 import Avatar from "@/components/Avatar";
 import Loader from "@/components/Loader";
+import Roles from "@/components/Roles";
 
 type Props = {
 	username: string;
@@ -48,8 +49,9 @@ export default function ProfilePage({ username }: Props) {
 			<center className="p-10">
 				<Avatar username={username} width={100} />
 				<h2 className="font-extrabold">{username}</h2>
-				{["AlphaBeta906"].includes(username) && <div className="badge bg-transparent border-red-500 text-red-500 mx-1 my-2 h-6">🛡️ Creator</div>}
-				{["AlphaBeta906"].includes(username) && <div className="badge bg-transparent border-lime-600 text-lime-600 mx-1 my-2 h-6">🧪 Beta Tester</div>}
+				<div className="mt-2">
+					<Roles username={username} />
+				</div>
 			</center>
 
 			<div className="mx-10">

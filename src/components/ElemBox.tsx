@@ -16,7 +16,7 @@ type Props = {
 /**
  * `ElementBox takes a body object and a width, and returns a div with the body's name and color, and a font
  * size that scales with the width
- * @param {Props} props - React props
+ * @param {Props} props - The props that are passed to the component.
  * @returns A div with the name of the element, the color of the element, and the size of the element.
  */
 export default function ElemBox({ body, width = 96 }: Props) {
