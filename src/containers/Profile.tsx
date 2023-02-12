@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
 import { DateTime } from "luxon";
 
+import { trpc } from "@/lib/trpc";
 import ErrorMessage from "@/components/ErrorMessage";
 import Avatar from "@/components/Avatar";
 import Loader from "@/components/Loader";
@@ -11,36 +11,21 @@ type Props = {
 }
 
 export default function ProfilePage({ username }: Props) {
-	const { isLoading, error, data } = useQuery({
-		queryKey: ["element"],
-		queryFn: async () => {
-			const result = await fetch(`/api/user?username=${username}`);
-
-			if (result.status === 404) {
-				return 404;
-			}
-
-			const rjson = result.json();
-
-			return rjson;
-		}
+	const { error, status, data } = trpc.user.byUsername.useQuery({
+		username: username
 	});
 
-	if (isLoading) return <Loader />;
-
-	if (error instanceof Error) return (
-		<>
-			An error has occurred: {error.message}
-		</>
-	);
-
-	if (data === 404) {
-		return (
-			<ErrorMessage code="404">
-				The user does not exist.
-			</ErrorMessage>
-		);
+	if (error) {
+		if (error.data?.code === "NOT_FOUND") {
+			return (
+				<ErrorMessage code="404">
+					This element does not exist.
+				</ErrorMessage>
+			);
+		}
 	}
+
+	if (status !== "success") return <Loader />;
 
 	const date = DateTime.fromJSDate(new Date(data.date_of_creation)).toLocaleString(DateTime.DATETIME_FULL);
 

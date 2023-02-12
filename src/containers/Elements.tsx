@@ -1,41 +1,30 @@
-import { useQuery } from "@tanstack/react-query";
 import { element } from "@prisma/client";
 
 import ElemBox from "@/components/ElemBox";
 import Loader from "@/components/Loader";
+import { trpc } from "@/lib/trpc";
 
 export default function ElementsPage() {
-	const { isLoading, error, data } = useQuery({
-		queryKey: ["element"],
-		queryFn: async () => {
-			const result = await fetch("/api/element");
+	const { error, status, data } = trpc.element.element.useQuery();
 
-			const rjson = result.json();
-
-			return rjson;
-		}
-	});
-
-	if (isLoading) return <Loader />;
-
-	if (error instanceof Error) return (
-		<>
-			An error has occurred: {error.message}
-		</>
-	);
-
-	const elemList = data.map((element: element) => {
-		// TODO: Fix this mess of a map - February 4, 2023
-		
+	if (error) {
 		return (
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
+			<>
+				Returned error: {error?.data?.code}
+			</>
+		);
+	}
+
+	if (status !== "success") return <Loader />;
+
+	const elemList = data.map((element: element) => {		
+		return (
 			<div className="font-mono px-2 py-1 flex items-center" key={element.id.toString()}>
-				#{element.id}:&thinsp;<a
+				{`#${element.id}`}:&nbsp;<a
 					className="inline-block"
 					href={`/element/${element.name}`}
 				>
-					<ElemBox body={element} width={50} />
+					<ElemBox name={element.name} color={element.color} width={50} />
 				</a>
 			</div>
 		);

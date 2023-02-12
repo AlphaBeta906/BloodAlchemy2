@@ -3,7 +3,7 @@ import LoginPage from "@/containers/Login";
 
 export default function Login() {
 	return (
-		<Layout title="Login">
+		<Layout title="Login" devtools={true}>
 			<LoginPage />
 		</Layout>
 	);

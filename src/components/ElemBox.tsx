@@ -1,15 +1,15 @@
-import type { element } from "@prisma/client";
-
 import blackOrWhite from "@/lib/blackOrWhite";
 
 /**
- * `Props` is an object with a `body` property that is a React element and an optional `width` property
- * that is a number.
- * @property {element} body - The data of the modal.
- * @property {number} width - The width of the modal.
+ * Props is an object with a name property that is a string, a color property that is a string, and an
+ * optional width property that is a number.
+ * @property {string} name - The name of the icon.
+ * @property {string} color - string;
+ * @property {number} width - number;
  */
 type Props = {
-	body: element;
+	name: string;
+	color: string;
 	width?: number;
 };
 
@@ -19,16 +19,16 @@ type Props = {
  * @param {Props} props - The props that are passed to the component.
  * @returns A div with the name of the element, the color of the element, and the size of the element.
  */
-export default function ElemBox({ body, width = 96 }: Props) {
+export default function ElemBox({ name, color, width = 96 }: Props) {
 	return (
 		<div id="elem" className="font-bold rounded-md bg-white flex items-center justify-center font-mono" style={{
 			height: width + "px", 
 			width: width + "px", 
-			fontSize: (width * 0.34)/(body.name.length * 0.3) + "px",
-			backgroundColor: `#${body.color}`,
-			color: blackOrWhite(body.color)
+			fontSize: (width * 0.34)/(name.length * 0.3) + "px",
+			backgroundColor: `#${color}`,
+			color: blackOrWhite(color)
 		}}>
-			{body.name}
+			{name}
 		</div>
 	);
 }

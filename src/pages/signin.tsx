@@ -3,7 +3,7 @@ import SigninPage from "@/containers/SignIn";
 
 export default function SignIn() {
 	return (
-		<Layout title="Signin">
+		<Layout title="Signin" devtools={true}>
 			<SigninPage />
 		</Layout>
 	);

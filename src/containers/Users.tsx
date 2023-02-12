@@ -1,31 +1,24 @@
 import type { user } from "@prisma/client";
 
-import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
+import { trpc } from "@/lib/trpc";
 import Avatar from "@/components/Avatar";
 import Loader from "@/components/Loader";
 import Roles from "@/components/Roles";
 
 export default function UsersPage() {
-	const { isLoading, error, data } = useQuery({
-		queryKey: ["element"],
-		queryFn: async () => {
-			const result = await fetch("/api/user");
+	const { error, status, data } = trpc.user.user.useQuery();
 
-			const rjson = result.json();
+	if (error) {
+		return (
+			<>
+				Returned error: {error?.data?.code}
+			</>
+		);
+	}
 
-			return rjson;
-		}
-	});
-
-	if (isLoading) return <Loader />;
-
-	if (error instanceof Error) return (
-		<>
-			An error has occurred: {error.message}
-		</>
-	);
+	if (status !== "success") return <Loader />;
 
 	const elemList = data.map((user: user) => {		
 		return (

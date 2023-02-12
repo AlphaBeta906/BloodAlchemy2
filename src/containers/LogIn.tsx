@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 
 import { account, token } from "@/lib/stores";
 import Input from "@/components/Input";
+import { trpc } from "@/lib/trpc";
 
 type FormValues = {
 	username: string;
@@ -19,46 +20,43 @@ export default function LoginPage() {
 	const [isCheckedPass, setIsCheckedPass] = useState(false);
 	const router = useRouter();
 	const $account = useStore(account);
+	const { mutate, isLoading } = trpc.auth.login.useMutation({
+		onSuccess: (data) => {
+			router.push("/");
+
+			account.set(data.user.username);
+			token.set(data.token);
+		},
+		onError: (error) => {
+			if (error.data?.code === "BAD_REQUEST") {
+				methods.setError("username", {
+					type: "custom",
+					message: error.message
+				});
+				return;
+			}
+
+			if (error.data?.code === "UNAUTHORIZED") {
+				methods.setError("password", {
+					type: "custom",
+					message: error.message
+				});
+				return;
+			}
+		}
+	});
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setIsCheckedPass(event.target.checked);
 	};
 
-	const registerUser: SubmitHandler<FormValues> = async (data) => {
-		const result = await fetch("/api/login", {
-			method: "POST",
-			body: JSON.stringify({
-				"username": data.username,
-				"password": data.password
-			})
+	const registerUser: SubmitHandler<FormValues> = async (form) => {
+		const { username, password } = form;
+
+		mutate({
+			username: username,
+			password: password
 		});
-
-		if (result.status === 404) {
-			methods.setError("username", {
-				type: "custom",
-				message: `Account "${data.username}" doesn't exist.`
-			});
-			return;
-		}
-
-		if (result.status === 401) {
-			methods.setError("password", {
-				type: "custom",
-				message: "The password is incorrect."
-			});
-			return;
-		}
-
-		if (result.status === 200) {
-			const rjson = await result.json();
-
-			console.log(rjson);
-
-			account.set(data.username);
-			token.set(rjson.token);
-
-			router.push("/");
-		}
 	};
 
 	useEffect(() => {
@@ -66,7 +64,7 @@ export default function LoginPage() {
 			router.push("/");
 			return;
 		}
-	});
+	}, []);
 
 	return (
 		<>
@@ -100,7 +98,7 @@ export default function LoginPage() {
 									/>
 								</label><br />
 
-								<button className="btn btn-primary" type="submit">
+								<button className="btn btn-primary" type="submit" disabled={isLoading}>
 									Login
 								</button>
 							</div>

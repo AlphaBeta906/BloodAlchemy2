@@ -7,6 +7,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/router";
 
 import { account, token } from "@/lib/stores";
+import { trpc } from "@/lib/trpc";
 import Input from "@/components/Input";
 
 type FormValues = {
@@ -20,13 +21,32 @@ export default function SignIn() {
 	const [isCheckedPass, setIsCheckedPass] = useState(false);
 	const router = useRouter();
 	const $account = useStore(account);
+	const mutation = trpc.auth.signin.useMutation({
+		onSuccess: (data) => {
+			router.push("/");
+
+			account.set(data.user.username);
+			token.set(data.token);
+		},
+		onError: (error) => {
+			if (error.data?.code === "BAD_REQUEST") {
+				methods.setError("username", {
+					type: "custom",
+					message: error.message
+				});
+				return;
+			}
+		}
+	});
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setIsCheckedPass(event.target.checked);
 	};
 
 	const addUser: SubmitHandler<FormValues> = async (data) => {
-		if (data.username === "undefined" || data.username === "null") {
+		const { username, password, confirm } = data;
+
+		if (username === "undefined" || username === "null") {
 			methods.setError("username", {
 				type: "custom",
 				message: "You can not name yourself \"undefined\" or \"null\"."
@@ -34,7 +54,7 @@ export default function SignIn() {
 			return;
 		}
 
-		if (data.confirm !== data.password) {
+		if (confirm !== password) {
 			methods.setError("confirm", {
 				type: "custom",
 				message: "Passwords do not match."
@@ -42,32 +62,10 @@ export default function SignIn() {
 			return;
 		}
 
-		const result = await fetch("/api/signin", {
-			method: "POST",
-			body: JSON.stringify({
-				"username": data.username,
-				"password": data.password
-			})
+		mutation.mutate({ 
+			username: username, 
+			password: password 
 		});
-
-		if (result.status === 400) {
-			methods.setError("username", {
-				type: "custom",
-				message: `An account "${data.username}" exists.`
-			});
-			return;
-		}
-
-		if (result.status === 201) {
-			const rjson = await result.json();
-
-			console.log(rjson);
-
-			account.set(data.username);
-			token.set(rjson.token);
-
-			router.push("/");
-		}
 	};
 
 	useEffect(() => {
