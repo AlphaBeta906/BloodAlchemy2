@@ -1,61 +1,64 @@
 {
-	"name": "bloodalchemy2",
-	"type": "module",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"dev": "astro dev",
-		"serve": "astro dev",
-		"build": "astro build",
-		"preview": "astro preview",
-		"astro": "astro"
-	},
-	"dependencies": {
-		"@astrojs/react": "^2.0.2",
-		"@dicebear/avatars": "^4.10.8",
-		"@dicebear/identicon": "^5.1.6",
-		"@dicebear/initials": "^5.1.6",
-		"@nanostores/persistent": "^0.7.0",
-		"@nanostores/react": "^0.4.1",
-		"@prisma/client": "^4.9.0",
-		"@tanstack/react-query": "^4.23.0",
-		"@tanstack/react-query-devtools": "^4.23.0",
-		"@types/react": "^18.0.26",
-		"@types/react-dom": "^18.0.10",
-		"@typescript-eslint/eslint-plugin": "^5.49.0",
-		"@typescript-eslint/parser": "^5.49.0",
-		"astro": "^2.0.6",
-		"astro-icon": "^0.8.0",
-		"bcryptjs": "^2.4.3",
-		"crypto-js": "^4.1.1",
-		"daisyui": "^2.46.0",
-		"jsonwebtoken": "^9.0.0",
-		"luxon": "^3.2.1",
-		"postcss-scss": "^4.0.6",
-		"prisma": "^4.9.0",
-		"react": "18.2.0",
-		"react-dom": "18.2.0",
-		"react-hook-form": "^7.42.0",
-		"react-icons": "^4.7.1",
-		"sass": "^1.58.0",
-		"tailwindcss": "^3.2.4",
-		"theme-change": "^2.3.0"
-	},
-	"devDependencies": {
-		"@types/bcrypt": "^5.0.0",
-		"@types/bcryptjs": "^2.4.2",
-		"@types/jsonwebtoken": "^9.0.1",
-		"@types/luxon": "^3.2.0",
-		"autoprefixer": "^10.4.13",
-		"cz-conventional-changelog": "^3.3.0",
-		"eslint": "^8.32.0",
-		"eslint-plugin-astro": "^0.23.0",
-		"eslint-plugin-react": "^7.32.1",
-		"eslint-plugin-react-hooks": "^4.6.0"
-	},
-	"config": {
-		"commitizen": {
-			"path": "./node_modules/cz-conventional-changelog"
-		}
-	}
+  "name": "blooodalchemy2",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "NODE_ENV=development next dev -p 4000",
+    "build": "next build",
+    "start": "next start -p 4000",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@dicebear/collection": "^5.3.0",
+    "@dicebear/core": "^5.3.0",
+    "@nanostores/persistent": "^0.7.0",
+    "@nanostores/react": "^0.4.1",
+    "@next/font": "13.1.6",
+    "@prisma/client": "^4.9.0",
+    "@tanstack/react-query": "^4.24.4",
+    "@tanstack/react-query-devtools": "^4.24.4",
+    "@trpc/client": "^10.10.0",
+    "@trpc/next": "^10.10.0",
+    "@trpc/react-query": "^10.10.0",
+    "@trpc/server": "^10.10.0",
+    "@types/node": "18.11.18",
+    "@types/react": "18.0.27",
+    "@types/react-dom": "18.0.10",
+    "bcryptjs": "^2.4.3",
+    "daisyui": "^2.50.0",
+    "eslint": "8.33.0",
+    "eslint-config-next": "13.1.6",
+    "jsonwebtoken": "^9.0.0",
+    "luxon": "^3.2.1",
+    "next": "13.1.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.43.0",
+    "react-icons": "^4.7.1",
+    "superjson": "^1.12.2",
+    "ts-node": "^10.9.1",
+    "typescript": "4.9.5",
+    "zod": "^3.20.2"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/luxon": "^3.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "@typescript-eslint/parser": "^5.50.0",
+    "autoprefixer": "^10.4.13",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "postcss": "^8.4.21",
+    "postcss-sass": "^0.5.0",
+    "sass": "^1.58.0",
+    "tailwindcss": "^3.2.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }

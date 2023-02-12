@@ -18,12 +18,12 @@ model element {
 }
 
 model user {
-  id               BigInt   @id @unique @default(autoincrement())
   username         String   @unique @db.VarChar
   password         String   @db.VarChar
   elements         BigInt[]
   watts            BigInt
   barrels          Json[]
-  salt             String?  @db.VarChar
+  salt             String   @db.VarChar
   date_of_creation DateTime @default(now()) @db.Timestamp(6)
+  id               BigInt   @id @unique @default(autoincrement())
 }

@@ -1,38 +1,51 @@
-import type { APIRoute } from "astro";
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import type { NextApiRequest, NextApiResponse } from "next";
 
 import { PrismaClient } from "@prisma/client";
-import toJSON from "../../scripts/toJSON";
+import { z } from "zod";
+
+import toJSON from "@/lib/toJSON";
 
 const prisma = new PrismaClient();
 
 /**
- * It takes a request, checks if the request has a username parameter, and if it does, it returns the
- * user with that username
- * @returns A user object
+ * It takes a query string, validates it, and returns a user object if it exists
+ * @param {NextApiRequest} req - NextApiRequest - The request object
+ * @param res - NextApiResponse<object | null>
+ * @returns The user object
  */
-export const get: APIRoute = async ({ request }) => {
-	const url = new URL(request.url);
-	const params = new URLSearchParams(url.search);
+export default async function handler(req: NextApiRequest, res: NextApiResponse<object | null>) {
+	const query = req.query;
 
-	if (params.get("username") !== null) {
+	if (Object.keys(query).length === 0) {
+		const getElems = await prisma.user.findMany({
+			skip: 0,
+			take: 4,
+		});
+	
+		res.status(200).json(toJSON(getElems));
+	} else {
+		const schema = z.object({
+			username: z.string()
+		});
+
+		if (!schema.safeParse(query).success) {
+			res.status(422).json(null);
+			return;
+		}
+
 		const getUser = await prisma.user.findUnique({
 			where: {
-				username: params.get("username") ?? undefined
+				username: query.username?.toString()
 			}
 		});
 
 		if (getUser === null) {
-			return new Response(null, {
-				status: 404
-			});
+			res.status(404).json(null);
+			return;
 		}
 
-		return new Response(toJSON(getUser), {
-			status: 200,
-		});
+		res.status(200).json(toJSON(getUser ?? {}));
+		return;
 	}
-
-	return new Response(null, {
-		status: 422,
-	});
-};
+}

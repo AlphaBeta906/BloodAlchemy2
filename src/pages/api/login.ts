@@ -1,29 +1,35 @@
-import type { APIRoute } from "astro";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 import { PrismaClient } from "@prisma/client";
+import { z } from "zod";
 
-import toJSON from "../../scripts/toJSON";
-import { generateToken } from "../../scripts/auth/jwt";
-import { validateHash } from "../../scripts/auth/hash";
+import toJSON from "@/lib/toJSON";
+import { validateHash } from "@/lib/auth/hash";
+import { generateToken } from "@/lib/auth/jwt";
+import bodyParse from "@/lib/bodyParse";
 
 const prisma = new PrismaClient();
 
 /**
- * It takes a username and password from the request body, checks if the user exists, and if so, checks
- * if the password is correct. If so, it generates a token and returns it in the response
+ * It takes a username and password from the request body, checks if the user exists, checks if the
+ * password is correct, and if so, returns a token
+ * @param {NextApiRequest} req - NextApiRequest - This is the request object that Next.js provides.
+ * @param res - NextApiResponse<object | null>
  * @returns A user object and a token
  */
-export const post: APIRoute = async ({ request }) => {
-	const body = await request.json();
+export default async function handler(req: NextApiRequest, res: NextApiResponse<object | null>) {
+	const body = bodyParse(req.body);
 
-	const keysToCheck = ["username", "password"];
+	const schema = z.object({
+		username: z.string(),
+		password: z.string()
+	});
 
-	const hasAllKeys = keysToCheck.every(key => Object.keys(body).includes(key));
+	console.log(schema.safeParse(body));
 
-	if (!hasAllKeys) {
-		return new Response(null, {
-			status: 422
-		});
+	if (!schema.safeParse(body).success) {
+		res.status(422).json(null);
+		return;
 	}
 
 	const user = await prisma.user.findUnique({
@@ -33,22 +39,18 @@ export const post: APIRoute = async ({ request }) => {
 	});
 
 	if (!user) {
-		return new Response(null, {
-			status: 404
-		});
+		res.status(404).json(null);
+		return;
 	}
 
 	const pwd = validateHash(body.password, user.password);
 
 	if (!pwd) {
-		return new Response(null, {
-			status: 401
-		});
+		res.status(401).json(null);
+		return;
 	}
 
 	const token = generateToken(body.username);
 
-	return new Response(toJSON({ user: user, token: token }), {
-		status: 200
-	});
-};
+	res.status(200).json(toJSON({ user: user, token: token }));
+}

@@ -2,8 +2,12 @@ import { useStore } from "@nanostores/react";
 
 import Menu from "./Menu";
 import Avatar from "./Avatar";
-import { account } from "../scripts/stores";
+import { account } from "@/lib/stores";
 
+/**
+ * It renders a button with an avatar, and when the button is clicked, it renders a menu
+ * @returns A dropdown menu with a profile picture and a list of menu items.
+ */
 export default function ProfilePicture() {
 	const $account = useStore(account);
 

@@ -1,19 +1,22 @@
 import type { ReactNode } from "react";
 
+/**
+ * `Props` is an object with a `code` property that is a string and an optional `children` property
+ * that is a ReactNode.
+ * @property {string} code - The code to be highlighted.
+ * @property {ReactNode} children - The children of the component.
+ */
 type Props = {
 	code: string;
 	children?: ReactNode;
 };
 
 /**
- * It returns a div with a class of hero, which contains a div with a class of hero-content, which
- * contains a div with a class of max-w-md flex-1, which contains an h1 with a class of text-5xl
- * font-bold text-error, which contains the code prop, which contains a p with a class of py-6, which
- * contains the children prop, which contains an a with an href of /, which contains a button with a
- * class of btn btn-primary, which contains the text "Go home?"
- * @returns A div with a class of hero h-[calc(100vh-4rem)]
+ * It renders a full-screen error message with a title and a message
+ * @param {Props} props - The props that are passed to the component.
+ * @returns A error message
  */
-export default function Error({ code, children }: Props) {
+export default function ErrorMessage({ code, children }: Props) {
 	return (
 		<div className="hero h-[calc(100vh-4rem)]">
 			<div className="hero-content text-center">
