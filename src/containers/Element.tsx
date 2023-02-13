@@ -7,10 +7,20 @@ import ElemBox from "@/components/ElemBox";
 import Avatar from "@/components/Avatar";
 import Loader from "@/components/Loader";
 
+/**
+ * `Props` is an object with a name property that is a string.
+ * @property {string} name - The name of the component.
+ */
 type Props = {
 	name: string;
 }
 
+/**
+ * `ElementPage` is a component that fetches the element data from the server, 
+ * and then displays it
+ * @param {Props} props - The props that are passed to the component.
+ * @returns The element page is being returned.
+ */
 export default function ElementPage({ name }: Props) {
 	const { error, status, data } = trpc.element.byName.useQuery({
 		name: name

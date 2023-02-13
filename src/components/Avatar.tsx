@@ -29,7 +29,7 @@ export default function Avatar({ username, width = 36 }: Props) {
 			setAvatar(
 				createAvatar(initials, {
 					seed: "??",
-					backgroundColor: ["505050", "505050", "505050"],
+					backgroundColor: ["505050"],
 					size: 30
 				})
 			);
@@ -37,7 +37,8 @@ export default function Avatar({ username, width = 36 }: Props) {
 			setAvatar(
 				createAvatar(identicon, {
 					seed: username,
-					size: 30
+					size: 30,
+					backgroundColor: ["ffffff"],
 				})
 			);
 		}
@@ -45,7 +46,7 @@ export default function Avatar({ username, width = 36 }: Props) {
 
 	return (
 		<div className="avatar p-0 m-0">
-			<div className="rounded-md bg-white" style={{ width: width }}>
+			<div className="rounded-md" style={{ width: width }}>
 				<img src={avatar?.toDataUriSync()} alt="avatar" />
 			</div>
 		</div>

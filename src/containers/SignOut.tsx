@@ -4,6 +4,11 @@ import { useEffect } from "react";
 
 import { account, token } from "@/lib/stores";
 
+/**
+ * `SignOutPage` is a component that creates a sign-out button, deletes the token 
+ * and account atoms, and redirects on success.
+ * @returns A alert that allows the user to sign-out.
+ */
 export default function SignOutPage() {
 	const router = useRouter();
 	const $account = useStore(account);

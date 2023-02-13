@@ -4,6 +4,11 @@ import ElemBox from "@/components/ElemBox";
 import Loader from "@/components/Loader";
 import { trpc } from "@/lib/trpc";
 
+/**
+ * `ElementsPage` is a React component that fetches a list of elements from the server and displays
+ * them
+ * @returns A list of elements.
+ */
 export default function ElementsPage() {
 	const { error, status, data } = trpc.element.element.useQuery();
 

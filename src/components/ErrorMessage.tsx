@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import Link from "next/link";
+
 /**
  * `Props` is an object with a `code` property that is a string and an optional `children` property
  * that is a ReactNode.
@@ -23,7 +25,7 @@ export default function ErrorMessage({ code, children }: Props) {
 				<div className="max-w-md flex-1">
 					<h1 className="text-5xl font-bold text-error">{code}</h1>
 					<p className="py-6">{children}</p>
-					<a href="/"><button className="btn btn-primary">Go home?</button></a>
+					<Link href="/" as="/"><button className="btn btn-primary">Go home?</button></Link>
 				</div>
 			</div>
 		</div>

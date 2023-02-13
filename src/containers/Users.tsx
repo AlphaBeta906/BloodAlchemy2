@@ -7,6 +7,11 @@ import Avatar from "@/components/Avatar";
 import Loader from "@/components/Loader";
 import Roles from "@/components/Roles";
 
+/**
+ * `UsersPage` is a function that returns a `div` element that contains a list of `div` elements that
+ * contain a `Link` element that contains a `Avatar` element that contains a `Roles` element
+ * @returns A list of users.
+ */
 export default function UsersPage() {
 	const { error, status, data } = trpc.user.user.useQuery();
 
