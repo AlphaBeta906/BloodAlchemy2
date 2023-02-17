@@ -21,7 +21,7 @@ export const elementRouter = router({
 			});
 
 			console.log(getElem);
-	
+
 			if (getElem === null) {
 				throw new TRPCError({
 					code: "NOT_FOUND",
@@ -31,13 +31,37 @@ export const elementRouter = router({
 
 			return getElem;
 		}),
-	element: procedure
-		.query(async () => {
-			const getElems = await prisma.element.findMany({
-				skip: 0,
-				take: 4,
+	infiniteElements: procedure
+		.input(z.object({
+			limit: z.number().min(1).max(100).nullish(),
+			cursor: z.number().nullish(),
+		}))
+		.query(async ({ input }) => {
+			const limit = input.limit ?? 50;
+			
+			const { cursor } = input;
+			const items = await prisma.element.findMany({
+				take: limit + 1,
+				cursor: {
+					id: cursor ?? 1
+				},
+				orderBy: {
+					id: "asc",
+				},
 			});
-		
-			return getElems;
+
+			let nextCursor: typeof cursor | undefined = undefined;
+			if (items.length > limit) {
+				const nextItem = items.pop();
+				nextCursor = Number(nextItem?.id);
+			}	
+
+			const totalElems = await prisma.element.count();
+
+			return {
+				items,
+				totalElems,
+				nextCursor,
+			};
 		})
 });

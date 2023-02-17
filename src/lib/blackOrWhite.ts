@@ -1,7 +1,8 @@
 /**
  * It takes a hex color code, converts it to RGB, calculates the luminance, and returns either black or
- * white depending on which color contrasts better
+ * white depending on which color contrasts better. (Code was written by ChatGPT.)
  * @param {string} hex - The hexadecimal color code to be converted.
+ * @see {@link https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color} for reference.
  * @returns A string of either "#000000" or "#ffffff"
  */
 export default function blackOrWhite(hex: string) {

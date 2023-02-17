@@ -1,4 +1,6 @@
 import { DateTime } from "luxon";
+import { useState } from "react";
+
 import Link from "next/link";
 
 import { trpc } from "@/lib/trpc";
@@ -22,9 +24,32 @@ type Props = {
  * @returns The element page is being returned.
  */
 export default function ElementPage({ name }: Props) {
-	const { error, status, data } = trpc.element.byName.useQuery({
+	const [page, setPage] = useState(0);
+
+	const { error, status, data: elemData } = trpc.element.byName.useQuery({
 		name: name
 	});
+
+	const { data, fetchNextPage } = trpc.element.infiniteElements.useInfiniteQuery(
+		{
+			limit: 1, // will update when requests are open
+		},
+		{
+			getNextPageParam: (lastPage) => lastPage.nextCursor,
+			initialCursor: elemData?.id
+		},
+	);
+
+	const handleFetchNextPage = () => {
+		fetchNextPage();
+		setPage((prev) => prev + 1);
+	};
+
+	const handleFetchPreviousPage = () => {
+		setPage((prev) => prev - 1);
+	};
+
+	const toShow = data?.pages[page]?.items[0];
 
 	if (error) {
 		if (error.data?.code === "NOT_FOUND") {
@@ -36,25 +61,38 @@ export default function ElementPage({ name }: Props) {
 		}
 	}
 
-	if (status !== "success") return <Loader />;
+	if (status !== "success" || toShow === undefined) return <Loader />;
 
-	const date = DateTime.fromJSDate(new Date(data.date_of_creation)).toLocaleString(DateTime.DATETIME_FULL);
+	const date = DateTime.fromJSDate(new Date(toShow.date_of_creation)).toLocaleString(DateTime.DATETIME_FULL);
 
 	return (
 		<>
 			<center className="p-10">
-				<ElemBox name={data.name} color={data.color} width={100} />
+				<ElemBox name={toShow.name} color={toShow.color} width={100} />
 			</center>
 
 			<div className="mx-10">
-				<div className="mb-1.5"><b>ID:</b>{` #${data.id}`}</div>
-				<div className="mb-1.5"><b>Generation:</b>{` ${data.generation}`}</div>
-				<div className="mb-1.5"><b>Complexity:</b>{` ${data.complexity}`}</div>
+				<div className="mb-1.5"><b>ID:</b>{` #${toShow.id}`}</div>
+				<div className="mb-1.5"><b>Generation:</b>{` ${toShow.generation}`}</div>
+				<div className="mb-1.5"><b>Complexity:</b>{` ${toShow.complexity}`}</div>
 				<div className="flex items-center mb-1.5">
-					<b>Creator:</b>&nbsp;<Avatar username={data.creator} width={28} />&nbsp;<Link href={`/user/${data.creator}`} as={`/user/${data.creator}`} className="text-blue-600 dark:text-blue-500">{data.creator}</Link>
+					<b>Creator:</b>&nbsp;<Avatar username={toShow.creator} width={28} />&nbsp;<Link href="/user/[username]" as={`/user/${toShow.creator}`} className="text-blue-600 dark:text-blue-500">{toShow.creator}</Link>
 				</div>
 				<div className="mb-1.5"><b>Date of Creation:</b> {date}</div>
 			</div>
+
+			<center>
+				<button
+					className="btn btn-secondary mx-3"
+					onClick={handleFetchPreviousPage}
+					disabled={page === 0}
+				>Back Page</button>
+				<button
+					className="btn btn-secondary mx-3"
+					onClick={handleFetchNextPage}
+					disabled={data?.pages[page]?.nextCursor === undefined}
+				>Next Page</button>
+			</center>
 		</>
 	);
 }
