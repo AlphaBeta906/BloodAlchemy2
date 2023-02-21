@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 import { theme, account } from "../lib/stores";
-import Avatar from "./Avatar";
+import Avatar from "../components/Avatar";
 
 /**
  * It renders a navbar with a logo, a theme toggle, and a profile picture

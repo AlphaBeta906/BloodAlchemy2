@@ -26,7 +26,7 @@ export default function ElemBox({ name, color, width = 96 }: Props) {
 			width: width + "px", 
 			fontSize: (width * 0.34)/(name.length * 0.3) + "px",
 			backgroundColor: `#${color}`,
-			color: blackOrWhite(color)
+			color: `#${blackOrWhite(color)}`
 		}}>
 			{name}
 		</div>

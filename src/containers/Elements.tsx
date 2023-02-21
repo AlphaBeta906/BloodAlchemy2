@@ -1,6 +1,7 @@
 import type { element } from "@prisma/client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 import ElemBox from "@/components/ElemBox";
 import Loader from "@/components/Loader";
@@ -47,12 +48,13 @@ export default function ElementsPage() {
 	const elemList = toShow?.map((element: element) => {
 		return (
 			<div className="font-mono px-2 py-1 flex items-center" key={element.id.toString()}>
-				{`#${element.id}`}:&nbsp;<a
+				{`#${element.id}`}:&nbsp;<Link
 					className="inline-block"
-					href={`/element/${element.name}`}
+					href="/element/[name]"
+					as={`/element/${element.name}`}
 				>
 					<ElemBox name={element.name} color={element.color} width={50} />
-				</a>
+				</Link>
 			</div>
 		);
 	});
