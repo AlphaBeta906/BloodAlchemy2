@@ -3,16 +3,17 @@ import type { ReactNode } from "react";
 import { useDroppable } from "@dnd-kit/core";
 
 type Props = {
+	id: string
 	children?: ReactNode
 }
 
-export default function Droppable({ children }: Props) {
+export default function Droppable({ id, children }: Props) {
 	const { setNodeRef } = useDroppable({
-		id: "droppable",
+		id: id,
 	});
   
 	return (
-		<div className="h-min w-min" ref={setNodeRef}>
+		<div ref={setNodeRef}>
 			{children}
 		</div>
 	);

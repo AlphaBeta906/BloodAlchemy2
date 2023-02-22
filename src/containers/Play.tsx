@@ -14,7 +14,7 @@ import Droppable from "@/components/Droppable";
 
 export default function PlayPage() {
 	const $account = useStore(account);
-	const [parent, setParent] = useState<null | ReactNode>(null);
+	const [items, setItems] = useState<object>({});
 	const [isDragging, setIsDragging] = useState(false);
 
 	const { error, status, data } = trpc.user.getElems.useQuery({
@@ -46,7 +46,7 @@ export default function PlayPage() {
 		const { over, active } = event;
 
 		if (!active || !over) {
-			setParent(parent ? parent : null);
+			setItems(!(Object.keys(items).length === 0) ? items : {});
 			setIsDragging(false);
 			return;
 		} 
@@ -61,10 +61,13 @@ export default function PlayPage() {
 
 		if (!parsed.success) return;
 
-		setParent(
-			<ElemBox name={parsed.data.name} color={parsed.data.color} />
-		);
+		setItems({
+			...items,
+			[over.id]: <ElemBox name={parsed.data.name} color={parsed.data.color} />
+		});
 		setIsDragging(false);
+
+		console.log(JSON.stringify(items));
 	}
 
 	return (
@@ -75,9 +78,15 @@ export default function PlayPage() {
 				onDragEnd={handleDragEnd}
 			>
 				<center>
-					<Droppable>
-						<div className={`w-[150px] h-[150px] border-4 bg-base-300 rounded-md m-4 grid place-items-center ${isDragging ? "border-transparent" : "border-base-200"}`}>
-							{parent}
+					<Droppable id="1">
+						<div className={`w-[150px] h-[150px] border-4 bg-base-300 rounded-md m-4 inline-grid place-items-center ${isDragging ? "border-green-400" : "border-transparent"}`}>
+							{("1" in items ? items["1"] : <div className="h-[100px] w-[100px]"></div>) as ReactNode}
+						</div>
+					</Droppable>
+					<div className="font-bold text-2xl">+</div>
+					<Droppable id="2">
+						<div className={`w-[150px] h-[150px] border-4 bg-base-300 rounded-md m-4 inline-grid place-items-center ${isDragging ? "border-green-400" : "border-transparent"}`}>
+							{("2" in items ? items["2"] : <div className="h-[100px] w-[100px]"></div>) as ReactNode}
 						</div>
 					</Droppable>
 

@@ -40,6 +40,11 @@ export default function Navbox() {
 			setMenu(
 				<>
 					<li>
+						<Link href="/play" as="/play">
+							<span className="font-semibold no-underline">Play</span>
+						</Link>
+					</li>
+					<li>
 						<Link href="/user/[username]" as={`/user/${$account}`}>
 							<span className="font-semibold no-underline">Profile</span>
 						</Link>
