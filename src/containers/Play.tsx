@@ -1,8 +1,9 @@
 import type { element } from "@prisma/client";
+import type { ReactNode } from "react";
 
 import { useStore } from "@nanostores/react";
 import { DndContext } from "@dnd-kit/core";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { z } from "zod";
 
 import { account } from "@/lib/stores";
@@ -16,6 +17,7 @@ export default function PlayPage() {
 	const $account = useStore(account);
 	const [items, setItems] = useState<object>({});
 	const [isDragging, setIsDragging] = useState(false);
+	const [elems] = useState<Array<number>>([]);
 
 	const { error, status, data } = trpc.user.getElems.useQuery({
 		username: $account
@@ -31,7 +33,7 @@ export default function PlayPage() {
 
 	if (status !== "success") return <Loader />;
 
-	const elems = data
+	const elemList = data
 		.filter((element: element | null): element is element => element !== null)
 		.map((element: element) => {
 			return (
@@ -61,13 +63,18 @@ export default function PlayPage() {
 
 		if (!parsed.success) return;
 
+		elems[over.id - 1] = active.id;
+		if (elems[0] !== undefined && elems[1] !== undefined) elems.sort();
+
+		console.log(elems);
+
 		setItems({
 			...items,
 			[over.id]: <ElemBox name={parsed.data.name} color={parsed.data.color} />
 		});
 		setIsDragging(false);
 
-		console.log(JSON.stringify(items));
+		console.log(elems.join(" + "));
 	}
 
 	return (
@@ -90,8 +97,12 @@ export default function PlayPage() {
 						</div>
 					</Droppable>
 
+					<div>
+						{(elems[0] !== undefined && elems[1] !== undefined) ? elems.join(" + ") : <div className="text-red-500">Not enough elements</div>}
+					</div>
+
 					<div className="grid grid-cols-4 gap-4 w-[48rem] p-4 rounded-md bg-base-300 m-5">
-						{elems}
+						{elemList}
 					</div>
 				</center>
 			</DndContext>
