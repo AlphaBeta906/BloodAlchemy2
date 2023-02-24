@@ -17,7 +17,7 @@ export default function ElementsPage() {
 
 	const { data, error, status, fetchNextPage } = trpc.element.infiniteElements.useInfiniteQuery(
 		{
-			limit: 1, // will update when requests are open
+			limit: 10, // will update when requests are open
 		},
 		{
 			getNextPageParam: (lastPage) => lastPage.nextCursor,
