@@ -6,19 +6,9 @@ import Link from "next/link";
 import { theme, account } from "../lib/stores";
 import Avatar from "../components/Avatar";
 
-/**
- * It renders a navbar with a logo, a theme toggle, and a profile picture
- * @returns A navbar with a link to the home page and a toggle for the theme.
- */
-export default function Navbox() {
-	const $theme = useStore(theme);
+function Menu() {
 	const $account = useStore(account);
 	const [menu, setMenu] = useState(<></>);
-	const checked = ($theme === "dark");
-
-	const toggleTheme = () => {
-		theme.set($theme === "dark" ? "light" : "dark");
-	};
 
 	useEffect(() => {
 		if ($account === "") {
@@ -57,7 +47,23 @@ export default function Navbox() {
 				</>
 			);
 		}
-	}, []);
+	}, [$account]);
+
+	return menu;
+}
+
+/**
+ * It renders a navbar with a logo, a theme toggle, and a profile picture
+ * @returns A navbar with a link to the home page and a toggle for the theme.
+ */
+export default function Navbox() {
+	const $theme = useStore(theme);
+	const $account = useStore(account);
+	const checked = ($theme === "dark");
+
+	const toggleTheme = () => {
+		theme.set($theme === "dark" ? "light" : "dark");
+	};
 
 	useEffect(() => {
 		document.querySelector("html")?.setAttribute("data-theme", $theme);
@@ -92,7 +98,7 @@ export default function Navbox() {
 								<Avatar username={$account} />
 							</label>
 							<ul tabIndex={0} className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-300 rounded-box w-52">
-								{menu}
+								<Menu />
 							</ul>
 						</div>
 					</ul>

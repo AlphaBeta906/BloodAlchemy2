@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 
 import Head from "next/head";
-import QueryWrapper from "@/components/QueryWrapper";
 
+import QueryWrapper from "@/components/QueryWrapper";
 import Navbox from "@/containers/Navbox";
 
 /**

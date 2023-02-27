@@ -75,7 +75,7 @@ export default function LoginPage() {
 			router.push("/");
 			return;
 		}
-	}, []);
+	}, [$account, router]);
 
 	return (
 		<>
