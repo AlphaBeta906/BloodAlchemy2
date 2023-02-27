@@ -6,10 +6,19 @@ import Avatar from "@/components/Avatar";
 import Loader from "@/components/Loader";
 import Roles from "@/components/Roles";
 
+/**
+ * Props is an object with a username property that is a string.
+ * @property {string} username - The username of the user to display.
+ */
 type Props = {
 	username: string;
 }
 
+/**
+ * `ProfilePage` is a React component that displays a user's profile
+ * @param {Props} props - The props that are passed to the component.
+ * @returns A React component.
+ */
 export default function ProfilePage({ username }: Props) {
 	const { error, status, data } = trpc.user.byUsername.useQuery({
 		username: username

@@ -1,8 +1,9 @@
-import { ReactNode } from "react";
-import Head from "next/head";
-import QueryWrapper from "@/components/QueryWrapper";
+import type { ReactNode } from "react";
 
-import Navbox from "@/components/Navbox";
+import Head from "next/head";
+
+import QueryWrapper from "@/components/QueryWrapper";
+import Navbox from "@/containers/Navbox";
 
 /**
  * `Props` is an object with optional properties `title`, `devtools`, and `children`.

@@ -7,10 +7,20 @@ import ElemBox from "@/components/ElemBox";
 import Avatar from "@/components/Avatar";
 import Loader from "@/components/Loader";
 
+/**
+ * `Props` is an object with a name property that is a string.
+ * @property {string} name - The name of the component.
+ */
 type Props = {
 	name: string;
 }
 
+/**
+ * `ElementPage` is a component that fetches the element data from the server, 
+ * and then displays it
+ * @param {Props} props - The props that are passed to the component.
+ * @returns The element page is being returned.
+ */
 export default function ElementPage({ name }: Props) {
 	const { error, status, data } = trpc.element.byName.useQuery({
 		name: name
@@ -41,7 +51,7 @@ export default function ElementPage({ name }: Props) {
 				<div className="mb-1.5"><b>Generation:</b>{` ${data.generation}`}</div>
 				<div className="mb-1.5"><b>Complexity:</b>{` ${data.complexity}`}</div>
 				<div className="flex items-center mb-1.5">
-					<b>Creator:</b>&nbsp;<Avatar username={data.creator} width={28} />&nbsp;<Link href={`/user/${data.creator}`} as={`/user/${data.creator}`} className="text-blue-600 dark:text-blue-500">{data.creator}</Link>
+					<b>Creator:</b>&nbsp;<Avatar username={data.creator} width={28} />&nbsp;<Link href="/user/[username]" as={`/user/${data.creator}`} className="text-blue-600 dark:text-blue-500">{data.creator}</Link>
 				</div>
 				<div className="mb-1.5"><b>Date of Creation:</b> {date}</div>
 			</div>

@@ -10,12 +10,24 @@ import { account, token } from "@/lib/stores";
 import { trpc } from "@/lib/trpc";
 import Input from "@/components/Input";
 
+/**
+ * FormValues is an object with a username property that's a string, a password property that's a
+ * string, and a confirm property that's a string.
+ * @property {string} username - The username of the user.
+ * @property {string} password - The password the user entered.
+ * @property {string} confirm - The value of the confirm password field.
+ */
 type FormValues = {
 	username: string;
 	password: string;
 	confirm: string;
 };
 
+/**
+ * `SignInPage` is a component that creates a sign-in form, sends a mutation to a server, 
+ * redirects on success, and returns errors.
+ * @returns A form that allows the user to sign-in.
+ */
 export default function SignIn() {
 	const methods = useForm<FormValues>();
 	const [isCheckedPass, setIsCheckedPass] = useState(false);

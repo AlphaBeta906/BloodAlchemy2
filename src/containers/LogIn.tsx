@@ -7,14 +7,25 @@ import { useStore } from "@nanostores/react";
 import { useRouter } from "next/router";
 
 import { account, token } from "@/lib/stores";
-import Input from "@/components/Input";
 import { trpc } from "@/lib/trpc";
+import Input from "@/components/Input";
 
+/**
+ * FormValues is an object with a username property that is a string and a password property that is a
+ * string.
+ * @property {string} username - The username of the user.
+ * @property {string} password - The password the user entered.
+ */
 type FormValues = {
 	username: string;
 	password: string;
 };
 
+/**
+ * `LoginPage` is a component that, creates a login form, sends a mutation to a server, 
+ * redirects on success, and returns errors.
+ * @returns A form that allows the user to login.
+ */
 export default function LoginPage() {
 	const methods = useForm<FormValues>();
 	const [isCheckedPass, setIsCheckedPass] = useState(false);
@@ -64,7 +75,7 @@ export default function LoginPage() {
 			router.push("/");
 			return;
 		}
-	}, []);
+	}, [$account, router]);
 
 	return (
 		<>

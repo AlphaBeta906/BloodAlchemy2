@@ -18,6 +18,7 @@ model element {
 }
 
 model user {
+  id               BigInt   @id @unique @default(autoincrement())
   username         String   @unique @db.VarChar
   password         String   @db.VarChar
   elements         BigInt[]
@@ -25,5 +26,13 @@ model user {
   barrels          Json[]
   salt             String   @db.VarChar
   date_of_creation DateTime @default(now()) @db.Timestamp(6)
+}
+
+model request {
   id               BigInt   @id @unique @default(autoincrement())
+  reaction         String   @unique @db.VarChar
+  result           String   @db.VarChar
+  votes            Json[]   
+  date_of_creation DateTime @default(now()) @db.Timestamp(6)
+  date_of_expiry   DateTime @db.Timestamp(6)
 }
