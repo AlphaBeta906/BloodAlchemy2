@@ -1,4 +1,4 @@
-import type { element } from "@prisma/client";
+import type { Element } from "@prisma/client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -45,7 +45,7 @@ export default function ElementsPage() {
 
 	if (status !== "success") return <Loader />;
 
-	const elemList = toShow?.map((element: element) => {
+	const elemList = toShow?.map((element: Element) => {
 		return (
 			<div className="font-mono px-2 py-1 flex items-center" key={element.id.toString()}>
 				{`#${element.id}`}:&nbsp;<Link

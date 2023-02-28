@@ -29,7 +29,23 @@ export const elementRouter = router({
 				});
 			}
 
-			return getElem;
+			const getAuthor = await prisma.user.findUnique({
+				where: {
+					id: getElem.id
+				},
+				select: {
+					username: true		
+				}
+			});
+
+			if (getAuthor === null) {
+				throw new TRPCError({
+					code: "INTERNAL_SERVER_ERROR",
+					message: "Element's author does not exist"
+				});
+			}
+
+			return { elemData: getElem, authorData: getAuthor };
 		}),
 	infiniteElements: procedure
 		.input(z.object({

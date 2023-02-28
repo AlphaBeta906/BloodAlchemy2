@@ -29,14 +29,29 @@ export const userRouter = router({
 
 			return getUser;
 		}),
-	user: procedure
-		.query(async () => {
-			const getUsers = await prisma.user.findMany({
-				skip: 0,
-				take: 4,
+	byId: procedure
+		.input(
+			z.object({
+				id: z.number()
+			})
+		)
+		.query(async ({ input }) => {
+			const { id } = input;
+
+			const getUser = await prisma.user.findUnique({
+				where: {
+					id: id
+				}
 			});
-		
-			return getUsers;
+	
+			if (getUser === null) {
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: `No element with ID ${id} was found`
+				});
+			}
+
+			return getUser;
 		}),
 	getElems: procedure
 		.input(
@@ -50,7 +65,10 @@ export const userRouter = router({
 			const getUser = await prisma.user.findUnique({
 				where: {
 					username: username
-				}
+				},
+				include: {
+					elements: true,
+				},
 			});
 	
 			if (getUser === null) {

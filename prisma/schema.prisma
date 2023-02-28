@@ -7,32 +7,45 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model element {
-  id               BigInt   @id @unique @default(autoincrement())
-  name             String   @unique @db.VarChar
-  color            String   @db.VarChar
+model Element {
+  id               BigInt            @id @unique @default(autoincrement())
+  name             String            @unique @db.VarChar
+  color            String            @db.VarChar
   generation       BigInt
   complexity       BigInt
-  date_of_creation DateTime @default(now()) @db.Timestamp(6)
-  creator          String   @db.VarChar
+  date_of_creation DateTime          @default(now()) @db.Timestamp(6)
+  creator          User              @relation(fields: [creatorId], references: [id])
+  creatorId        BigInt
+  found            ElementsOnUsers[]
 }
 
-model user {
-  id               BigInt   @id @unique @default(autoincrement())
-  username         String   @unique @db.VarChar
-  password         String   @db.VarChar
-  elements         BigInt[]
+model User {
+  id               BigInt            @id @unique @default(autoincrement())
+  username         String            @unique @db.VarChar
+  password         String            @db.VarChar
+  creations        Element[]
+  elements         ElementsOnUsers[]
   watts            BigInt
   barrels          Json[]
-  salt             String   @db.VarChar
-  date_of_creation DateTime @default(now()) @db.Timestamp(6)
+  salt             String            @db.VarChar
+  date_of_creation DateTime          @default(now()) @db.Timestamp(6)
 }
 
-model request {
-  id               BigInt   @id @unique @default(autoincrement())
-  reaction         String   @unique @db.VarChar
-  result           String   @db.VarChar
-  votes            Json[]   
-  date_of_creation DateTime @default(now()) @db.Timestamp(6)
-  date_of_expiry   DateTime @db.Timestamp(6)
+model Request {
+  id               BigInt            @id @unique @default(autoincrement())
+  reaction         String            @unique @db.VarChar
+  result           String            @db.VarChar
+  votes            Json[]
+  date_of_creation DateTime          @default(now()) @db.Timestamp(6)
+  date_of_expiry   DateTime          @db.Timestamp(6)
+}
+
+model ElementsOnUsers {
+  element          Element           @relation(fields: [elementId], references: [id])
+  elementId        BigInt
+  user             User              @relation(fields: [userId], references: [id])
+  userId           BigInt
+  assignedAt       DateTime          @default(now())
+
+  @@id([elementId, userId])
 }
