@@ -31,7 +31,7 @@ export const elementRouter = router({
 
 			const getAuthor = await prisma.user.findUnique({
 				where: {
-					id: getElem.id
+					id: getElem.creatorId
 				},
 				select: {
 					username: true		
