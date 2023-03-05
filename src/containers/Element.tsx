@@ -38,20 +38,22 @@ export default function ElementPage({ name }: Props) {
 
 	if (status !== "success") return <Loader />;
 
-	const date = DateTime.fromJSDate(new Date(data.date_of_creation)).toLocaleString(DateTime.DATETIME_FULL);
+	const { elemData, authorData } = data;
+
+	const date = DateTime.fromJSDate(new Date(elemData.date_of_creation)).toLocaleString(DateTime.DATETIME_FULL);
 
 	return (
 		<>
 			<center className="p-10">
-				<ElemBox name={data.name} color={data.color} width={100} />
+				<ElemBox name={elemData.name} color={elemData.color} width={100} />
 			</center>
 
 			<div className="mx-10">
-				<div className="mb-1.5"><b>ID:</b>{` #${data.id}`}</div>
-				<div className="mb-1.5"><b>Generation:</b>{` ${data.generation}`}</div>
-				<div className="mb-1.5"><b>Complexity:</b>{` ${data.complexity}`}</div>
+				<div className="mb-1.5"><b>ID:</b>{` #${elemData.id}`}</div>
+				<div className="mb-1.5"><b>Generation:</b>{` ${elemData.generation}`}</div>
+				<div className="mb-1.5"><b>Complexity:</b>{` ${elemData.complexity}`}</div>
 				<div className="flex items-center mb-1.5">
-					<b>Creator:</b>&nbsp;<Avatar username={data.creator} width={28} />&nbsp;<Link href="/user/[username]" as={`/user/${data.creator}`} className="text-blue-600 dark:text-blue-500">{data.creator}</Link>
+					<b>Creator:</b>&nbsp;<Avatar username={authorData.username} width={28} />&nbsp;<Link href="/user/[username]" as={`/user/${authorData.username}`} className="text-blue-600 dark:text-blue-500">{authorData.username}</Link>
 				</div>
 				<div className="mb-1.5"><b>Date of Creation:</b> {date}</div>
 			</div>

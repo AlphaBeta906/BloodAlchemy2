@@ -58,14 +58,6 @@ export default function SignIn() {
 	const addUser: SubmitHandler<FormValues> = async (data) => {
 		const { username, password, confirm } = data;
 
-		if (username === "undefined" || username === "null") {
-			methods.setError("username", {
-				type: "custom",
-				message: "You can not name yourself \"undefined\" or \"null\"."
-			});
-			return;
-		}
-
 		if (confirm !== password) {
 			methods.setError("confirm", {
 				type: "custom",

@@ -1,4 +1,4 @@
-import type { element } from "@prisma/client";
+import type { Element } from "@prisma/client";
 import type { ReactNode, ChangeEvent } from "react";
 
 import { useStore } from "@nanostores/react";
@@ -36,8 +36,8 @@ export default function PlayPage() {
 	if (status !== "success") return <Loader />;
 
 	const elemList = data
-		.filter((element: element | null): element is element => element !== null)
-		.map((element: element) => {
+		.filter((element: Element | null): element is Element => element !== null)
+		.map((element: Element) => {
 			return (
 				<Draggable key={element.id.toString()} id={element.id.toString()}>
 					<ElemBox color={element.color} name={element.name} />

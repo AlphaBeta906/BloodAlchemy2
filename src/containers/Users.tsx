@@ -1,4 +1,4 @@
-import type { user } from "@prisma/client";
+import type { User } from "@prisma/client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -50,7 +50,7 @@ export default function UsersPage() {
 
 	if (status !== "success") return <Loader />;
 
-	const userList = toShow?.map((user: user) => {		
+	const userList = toShow?.map((user: User) => {		
 		return (
 			<div className="font-mono px-2 py-1 flex items-center" key={user.id.toString()}>
 				{`#${user.id}`}:&nbsp; 
